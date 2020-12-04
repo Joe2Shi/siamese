@@ -1,0 +1,21 @@
+server:
+  port: 10086
+spring:
+  application:
+    name: siamese-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.server-address}
+        namespace: ${nacos.namespace}
+        group: ${nacos.group}
+      config:
+        server-addr: ${nacos.server-address}
+        namespace: ${nacos.namespace}
+        group: ${nacos.group}
+        file-extension: yml
+
+nacos:
+  server-address: 192.168.1.134:8848
+  namespace: fda4fd06-c23e-4981-ba13-8cdacb0bef0e
+  group: SIAMESE_GROUP
