@@ -10,6 +10,7 @@
     <modules>
         <module>siamese-gateway</module>
         <module>siamese-upload</module>
+        <module>siamese-common</module>
     </modules>
     <packaging>pom</packaging>
 
