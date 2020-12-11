@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public enum ResponseEnum {
 
-    REQUEST_SUCCESS(20000, "Upload File Success"),
-    UPLOAD_FILE_FAILED(50000, "Upload File Fail");
+    UPLOAD_FILE_SUCCESS(20000, "upload file success"),
+    INVALID_FILE_TYPE(40000, "invalid file type"),
+    UPLOAD_FILE_FAILED(50000, "upload file fail");
     private Integer code;
     private String message;
 

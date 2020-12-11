@@ -11,6 +11,7 @@
         <module>siamese-gateway</module>
         <module>siamese-upload</module>
         <module>siamese-common</module>
+        <module>siamese-file</module>
     </modules>
     <packaging>pom</packaging>
 
