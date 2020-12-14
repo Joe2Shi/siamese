@@ -2,6 +2,8 @@ package com.joe2shi.siamese.file.service.impl;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.joe2shi.siamese.common.constant.LoggerConstant;
+import com.joe2shi.siamese.common.vo.BaseResult;
 import com.joe2shi.siamese.file.config.FileProperties;
 import com.joe2shi.siamese.file.entity.SiameseFileEntity;
 import com.joe2shi.siamese.file.mapper.FileMapper;
@@ -15,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -61,12 +64,40 @@ public class ImageServiceImpl implements ImageService {
             if (result != 1) {
                 // remove from file server
                 fastFileStorageClient.deleteFile(storePath.getFullPath());
-                throw new SiameseException(ResponseEnum.UPLOAD_FILE_FAILED);
+                throw new SiameseException(ResponseEnum.UPLOAD_IMAGE_FAILED);
             }
             // return result
-            return new DataResult<>(ResponseEnum.UPLOAD_FILE_SUCCESS, address);
+            return new DataResult<>(ResponseEnum.UPLOAD_IMAGE_SUCCESS, address);
         } catch (IOException e) {
-            throw new SiameseException(ResponseEnum.UPLOAD_FILE_FAILED);
+            log.error(LoggerConstant.IMAGE_UPLOAD_FAIL + e);
+            throw new SiameseException(ResponseEnum.UPLOAD_IMAGE_FAILED);
+        }
+    }
+
+    @Override
+    @Transactional
+    public BaseResult deleteImage(String id) {
+        try {
+            // query whether the record exists
+            SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
+            if (siameseFileEntity == null) {
+                throw new SiameseException(ResponseEnum.IMAGE_NOT_FOUND);
+            }
+            // delete records in the database
+            int result = fileMapper.deleteByPrimaryKey(id);
+            if (result != 1) {
+                throw new SiameseException(ResponseEnum.DELETE_IMAGE_FAILED);
+            }
+            // get group and path
+            String groupAndPath = siameseFileEntity.getAddress().substring(siameseFileEntity.getAddress().indexOf("/") + 1);
+            String group = groupAndPath.substring(0, groupAndPath.indexOf("/"));
+            String path = groupAndPath.substring(groupAndPath.indexOf("/") + 1);
+            // delete real file
+            fastFileStorageClient.deleteFile(group, path);
+            return new BaseResult(ResponseEnum.DELETE_IMAGE_SUCCESS);
+        } catch (Exception e) {
+            log.error(LoggerConstant.IMAGE_DELETE_FAIL + e);
+            throw new SiameseException(ResponseEnum.DELETE_IMAGE_FAILED);
         }
     }
 
