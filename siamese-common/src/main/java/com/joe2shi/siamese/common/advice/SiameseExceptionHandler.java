@@ -1,7 +1,7 @@
-package com.joe2shi.siamses.common.advice;
+package com.joe2shi.siamese.common.advice;
 
-import com.joe2shi.siamses.common.exception.SiameseException;
-import com.joe2shi.siamses.common.vo.BaseResult;
+import com.joe2shi.siamese.common.exception.SiameseException;
+import com.joe2shi.siamese.common.vo.BaseResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

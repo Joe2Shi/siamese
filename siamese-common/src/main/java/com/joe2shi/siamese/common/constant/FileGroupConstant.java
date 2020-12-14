@@ -1,8 +1,7 @@
-package com.joe2shi.siamses.common.enums;
+package com.joe2shi.siamese.common.constant;
 
-public enum FileGroupConstant {
+public class FileGroupConstant {
 
-    ;
     /**
      * image group
      */

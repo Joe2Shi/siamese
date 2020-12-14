@@ -6,10 +6,10 @@ import com.joe2shi.siamese.file.config.FileProperties;
 import com.joe2shi.siamese.file.entity.SiameseFileEntity;
 import com.joe2shi.siamese.file.mapper.FileMapper;
 import com.joe2shi.siamese.file.service.ImageService;
-import com.joe2shi.siamses.common.enums.FileGroupConstant;
-import com.joe2shi.siamses.common.enums.ResponseEnum;
-import com.joe2shi.siamses.common.exception.SiameseException;
-import com.joe2shi.siamses.common.vo.DataResult;
+import com.joe2shi.siamese.common.constant.FileGroupConstant;
+import com.joe2shi.siamese.common.enums.ResponseEnum;
+import com.joe2shi.siamese.common.exception.SiameseException;
+import com.joe2shi.siamese.common.vo.DataResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class ImageServiceImpl implements ImageService {
 
     @Autowired
-    private FileProperties FileProperties;
+    private FileProperties fileProperties;
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
     @Autowired
@@ -39,7 +39,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             // check file type
             String contentType = file.getContentType();
-            if (!FileProperties.getAllowTypes().contains(contentType)) {
+            if (!fileProperties.getAllowTypes().contains(contentType)) {
                 throw new SiameseException(ResponseEnum.INVALID_FILE_TYPE);
             }
             // check file content
@@ -50,7 +50,7 @@ public class ImageServiceImpl implements ImageService {
             // upload file service
             String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
             StorePath storePath = fastFileStorageClient.uploadFile(FileGroupConstant.IMAGE_GROUP, file.getInputStream(), file.getSize(), extension);
-            String address = FileProperties.getBaseAddress() + storePath.getFullPath();
+            String address = fileProperties.getBaseAddress() + storePath.getFullPath();
             // insert database
             String id = UUID.randomUUID().toString().replaceAll("-", "");
             SiameseFileEntity siameseFileEntity = new SiameseFileEntity();

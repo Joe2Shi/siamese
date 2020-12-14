@@ -1,12 +1,12 @@
-package com.joe2shi.siamses.common.vo;
+package com.joe2shi.siamese.common.vo;
 
-import com.joe2shi.siamses.common.enums.ResponseEnum;
+import com.joe2shi.siamese.common.enums.ResponseEnum;
 import lombok.Data;
 
 @Data
 public class BaseResult {
 
-    private int code;
+    private Integer code;
     private String message;
     private Long timestamp;
 

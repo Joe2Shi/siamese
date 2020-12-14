@@ -1,6 +1,6 @@
-package com.joe2shi.siamses.common.vo;
+package com.joe2shi.siamese.common.vo;
 
-import com.joe2shi.siamses.common.enums.ResponseEnum;
+import com.joe2shi.siamese.common.enums.ResponseEnum;
 import lombok.Data;
 
 @Data

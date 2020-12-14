@@ -1,7 +1,7 @@
 package com.joe2shi.siamese.file.controller;
 
 import com.joe2shi.siamese.file.service.MarkdownService;
-import com.joe2shi.siamses.common.vo.BaseResult;
+import com.joe2shi.siamese.common.vo.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
