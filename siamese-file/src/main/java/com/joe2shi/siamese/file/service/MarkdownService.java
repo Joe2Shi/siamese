@@ -13,4 +13,12 @@ public interface MarkdownService {
      */
     BaseResult uploadMarkdown(MultipartFile file);
 
+    /**
+     * delete markdown file
+     *
+     * @param id
+     * @return
+     */
+    BaseResult deleteMarkdown(String id);
+
 }

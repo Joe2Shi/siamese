@@ -69,7 +69,7 @@ public class ImageServiceImpl implements ImageService {
             // return result
             return new DataResult<>(ResponseEnum.UPLOAD_IMAGE_SUCCESS, address);
         } catch (IOException e) {
-            log.error(LoggerConstant.UPLOAD_IMAGE_FAILED + e);
+            log.error(LoggerConstant.UPLOAD_IMAGE_FAILED + e.getMessage());
             throw new SiameseException(ResponseEnum.UPLOAD_IMAGE_FAILED);
         }
     }
@@ -77,28 +77,23 @@ public class ImageServiceImpl implements ImageService {
     @Override
     @Transactional
     public BaseResult deleteImage(String id) {
-        try {
-            // query whether the record exists
-            SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
-            if (siameseFileEntity == null) {
-                throw new SiameseException(ResponseEnum.IMAGE_NOT_FOUND);
-            }
-            // delete records in the database
-            int result = fileMapper.deleteByPrimaryKey(id);
-            if (result != 1) {
-                throw new SiameseException(ResponseEnum.DELETE_IMAGE_FAILED);
-            }
-            // get group and path
-            String groupAndPath = siameseFileEntity.getAddress().substring(siameseFileEntity.getAddress().indexOf("/") + 1);
-            String group = groupAndPath.substring(0, groupAndPath.indexOf("/"));
-            String path = groupAndPath.substring(groupAndPath.indexOf("/") + 1);
-            // delete real file
-            fastFileStorageClient.deleteFile(group, path);
-            return new BaseResult(ResponseEnum.DELETE_IMAGE_SUCCESS);
-        } catch (Exception e) {
-            log.error(LoggerConstant.DELETE_IMAGE_FAILED + e);
+        // query whether the record exists
+        SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
+        if (siameseFileEntity == null) {
+            throw new SiameseException(ResponseEnum.IMAGE_NOT_FOUND);
+        }
+        // delete records in the database
+        int result = fileMapper.deleteByPrimaryKey(id);
+        if (result != 1) {
             throw new SiameseException(ResponseEnum.DELETE_IMAGE_FAILED);
         }
+        // get group and path
+        String groupAndPath = siameseFileEntity.getAddress().substring(siameseFileEntity.getAddress().indexOf("/") + 1);
+        String group = groupAndPath.substring(0, groupAndPath.indexOf("/"));
+        String path = groupAndPath.substring(groupAndPath.indexOf("/") + 1);
+        // delete real file
+        fastFileStorageClient.deleteFile(group, path);
+        return new BaseResult(ResponseEnum.DELETE_IMAGE_SUCCESS);
     }
 
 }

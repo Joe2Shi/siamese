@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -58,9 +59,31 @@ public class MarkdownServiceImpl implements MarkdownService {
             // return result
             return new BaseResult(ResponseEnum.UPLOAD_MARKDOWN_SUCCESS);
         } catch (IOException e) {
-            log.error(LoggerConstant.UPLOAD_MARKDOWN_FAILED + e);
+            log.error(LoggerConstant.UPLOAD_MARKDOWN_FAILED + e.getMessage());
             throw new SiameseException(ResponseEnum.UPLOAD_MARKDOWN_FAILED);
         }
+    }
+
+    @Override
+    @Transactional
+    public BaseResult deleteMarkdown(String id) {
+        // query whether the record exists
+        SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
+        if (siameseFileEntity == null) {
+            throw new SiameseException(ResponseEnum.MARKDOWN_NOT_FOUND);
+        }
+        // delete records in the database
+        int result = fileMapper.deleteByPrimaryKey(id);
+        if (result != 1) {
+            throw new SiameseException(ResponseEnum.DELETE_MARKDOWN_FAILED);
+        }
+        // get group and path
+        String groupAndPath = siameseFileEntity.getAddress().substring(siameseFileEntity.getAddress().indexOf("/") + 1);
+        String group = groupAndPath.substring(0, groupAndPath.indexOf("/"));
+        String path = groupAndPath.substring(groupAndPath.indexOf("/") + 1);
+        // delete real file
+        fastFileStorageClient.deleteFile(group, path);
+        return new BaseResult(ResponseEnum.DELETE_MARKDOWN_SUCCESS);
     }
 
 }

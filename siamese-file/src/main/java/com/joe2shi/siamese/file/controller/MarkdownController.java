@@ -4,10 +4,7 @@ import com.joe2shi.siamese.file.service.MarkdownService;
 import com.joe2shi.siamese.common.vo.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -20,6 +17,11 @@ public class MarkdownController {
     @PostMapping
     public ResponseEntity<BaseResult> uploadMarkdown(@RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(markdownService.uploadMarkdown(file));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<BaseResult> deleteMarkdown(@PathVariable("id") String id) {
+        return ResponseEntity.ok(markdownService.deleteMarkdown(id));
     }
 
 }
