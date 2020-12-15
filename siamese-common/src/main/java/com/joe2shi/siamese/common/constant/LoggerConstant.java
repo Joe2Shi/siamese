@@ -2,7 +2,8 @@ package com.joe2shi.siamese.common.constant;
 
 public class LoggerConstant {
 
-    public static final String IMAGE_UPLOAD_FAIL = " [ image upload fail ] ";
-    public static final String IMAGE_DELETE_FAIL = " [ image delete fail ] ";
+    public static final String UPLOAD_IMAGE_FAILED = " [ image upload failed ] ";
+    public static final String DELETE_IMAGE_FAILED = " [ image delete failed ] ";
+    public static final String UPLOAD_MARKDOWN_FAILED = " [ upload markdown failed ] ";
 
 }

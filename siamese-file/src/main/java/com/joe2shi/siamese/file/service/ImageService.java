@@ -21,4 +21,5 @@ public interface ImageService {
      * @return
      */
     BaseResult deleteImage(String id);
+
 }

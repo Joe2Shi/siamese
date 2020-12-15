@@ -42,7 +42,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             // check file type
             String contentType = file.getContentType();
-            if (!fileProperties.getAllowTypes().contains(contentType)) {
+            if (!fileProperties.getAllowImageTypes().contains(contentType)) {
                 throw new SiameseException(ResponseEnum.INVALID_FILE_TYPE);
             }
             // check file content
@@ -69,7 +69,7 @@ public class ImageServiceImpl implements ImageService {
             // return result
             return new DataResult<>(ResponseEnum.UPLOAD_IMAGE_SUCCESS, address);
         } catch (IOException e) {
-            log.error(LoggerConstant.IMAGE_UPLOAD_FAIL + e);
+            log.error(LoggerConstant.UPLOAD_IMAGE_FAILED + e);
             throw new SiameseException(ResponseEnum.UPLOAD_IMAGE_FAILED);
         }
     }
@@ -96,7 +96,7 @@ public class ImageServiceImpl implements ImageService {
             fastFileStorageClient.deleteFile(group, path);
             return new BaseResult(ResponseEnum.DELETE_IMAGE_SUCCESS);
         } catch (Exception e) {
-            log.error(LoggerConstant.IMAGE_DELETE_FAIL + e);
+            log.error(LoggerConstant.DELETE_IMAGE_FAILED + e);
             throw new SiameseException(ResponseEnum.DELETE_IMAGE_FAILED);
         }
     }

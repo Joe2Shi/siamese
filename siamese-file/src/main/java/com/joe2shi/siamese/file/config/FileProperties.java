@@ -10,6 +10,7 @@ import java.util.List;
 public class FileProperties {
 
     private String baseAddress;
-    private List<String> allowTypes;
+    private List<String> allowImageTypes;
+    private List<String> allowTextTypes;
 
 }

@@ -17,7 +17,7 @@ public class MarkdownController {
     @Autowired
     private MarkdownService markdownService;
 
-    @PostMapping("upload")
+    @PostMapping
     public ResponseEntity<BaseResult> uploadMarkdown(@RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(markdownService.uploadMarkdown(file));
     }
