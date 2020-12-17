@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public enum ResponseEnum {
 
+    QUERY_IMAGE_SUCCESS(20000, "query image success"),
     UPLOAD_IMAGE_SUCCESS(20000, "upload image success"),
     DELETE_IMAGE_SUCCESS(20000, "delete image success"),
     UPLOAD_MARKDOWN_SUCCESS(20000, "upload markdown success"),
