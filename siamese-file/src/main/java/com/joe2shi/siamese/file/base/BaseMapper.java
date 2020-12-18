@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.common.base;
+package com.joe2shi.siamese.file.base;
 
 import tk.mybatis.mapper.additional.idlist.DeleteByIdListMapper;
 import tk.mybatis.mapper.common.Mapper;
