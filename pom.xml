@@ -5,12 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.joe2shi.siamese</groupId>
-    <artifactId>siamese</artifactId>
+    <artifactId>siamese-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>siamese-gateway</module>
         <module>siamese-common</module>
-        <module>siamese-file</module>
+        <module>siamese-file-interface</module>
+        <module>siamese-file-service</module>
     </modules>
     <packaging>pom</packaging>
 

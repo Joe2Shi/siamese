@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public enum ResponseEnum {
-
     QUERY_IMAGE_SUCCESS(20000, "query image success"),
     UPLOAD_IMAGE_SUCCESS(20000, "upload image success"),
     DELETE_IMAGE_SUCCESS(20000, "delete image success"),
@@ -21,8 +20,8 @@ public enum ResponseEnum {
     DELETE_IMAGE_FAILED(50000, "delete image fail"),
     UPLOAD_MARKDOWN_FAILED(50000, "upload markdown failed"),
     DELETE_MARKDOWN_FAILED(50000, "delete markdown failed"),
+    PLEASE_TRY_AGAIN_LATER(50000, "please try again later"),
     ;
     private Integer code;
     private String message;
-
 }

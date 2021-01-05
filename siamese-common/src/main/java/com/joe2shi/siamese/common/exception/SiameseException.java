@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class SiameseException extends RuntimeException {
-
     private ResponseEnum responseEnum;
-
 }

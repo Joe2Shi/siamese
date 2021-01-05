@@ -6,7 +6,6 @@ import ch.qos.logback.core.pattern.color.ANSIConstants;
 import ch.qos.logback.core.pattern.color.ForegroundCompositeConverterBase;
 
 public class LogbackColor extends ForegroundCompositeConverterBase<ILoggingEvent> {
-
     @Override
     protected String getForegroundColorCode(ILoggingEvent event) {
         Level level = event.getLevel();
@@ -23,5 +22,4 @@ public class LogbackColor extends ForegroundCompositeConverterBase<ILoggingEvent
                 return ANSIConstants.DEFAULT_FG;
         }
     }
-
 }

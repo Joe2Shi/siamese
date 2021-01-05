@@ -1,7 +1,6 @@
 package com.joe2shi.siamese.common.constant;
 
 public class FileGroupConstant {
-
     /**
      * image group
      */
@@ -10,5 +9,4 @@ public class FileGroupConstant {
      * markdown group
      */
     public static final String MARKDOWN_GROUP = "markdown";
-
 }
