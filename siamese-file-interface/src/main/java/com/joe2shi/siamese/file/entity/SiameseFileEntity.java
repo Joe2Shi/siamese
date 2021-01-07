@@ -7,4 +7,5 @@ public class SiameseFileEntity {
     private String id;
     private String address;
     private String type;
+    private Long createTime;
 }

@@ -3,6 +3,7 @@ package com.joe2shi.siamese.file.service.impl;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.joe2shi.siamese.common.constant.LoggerConstant;
+import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.file.config.FileProperties;
 import com.joe2shi.siamese.file.entity.SiameseFileEntity;
 import com.joe2shi.siamese.file.mapper.FileMapper;
@@ -12,11 +13,12 @@ import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -48,19 +50,20 @@ public class ImageServiceImpl implements ImageService {
             }
             // check file content
             BufferedImage image = ImageIO.read(file.getInputStream());
-            if (image == null) {
+            if (ObjectUtils.isEmpty(image)) {
                 throw new SiameseException(ResponseEnum.INVALID_FILE_TYPE);
             }
             // upload file service
-            String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
+            String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), SystemConstant.STRING_DECIMAL_POINT);
             StorePath storePath = fastFileStorageClient.uploadFile(FileGroupConstant.IMAGE_GROUP, file.getInputStream(), file.getSize(), extension);
             String address = fileProperties.getBaseAddress() + storePath.getFullPath();
             // insert database
-            String id = UUID.randomUUID().toString().replaceAll("-", "");
+            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.STRING_HYPHEN, SystemConstant.STRING_NULL);
             SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
             siameseFileEntity.setId(id);
             siameseFileEntity.setAddress(address);
             siameseFileEntity.setType(FileGroupConstant.IMAGE_GROUP);
+            siameseFileEntity.setCreateTime(System.currentTimeMillis());
             int result = fileMapper.insert(siameseFileEntity);
             if (result != 1) {
                 // remove from file server
@@ -80,18 +83,21 @@ public class ImageServiceImpl implements ImageService {
     public SiameseResult deleteImage(String id) {
         // query whether the record exists
         SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
-        if (siameseFileEntity == null) {
+        if (ObjectUtils.isEmpty(siameseFileEntity)) {
+            throw new SiameseException(ResponseEnum.IMAGE_NOT_FOUND);
+        }
+        if (!FileGroupConstant.IMAGE_GROUP.equals(siameseFileEntity.getType())) {
             throw new SiameseException(ResponseEnum.IMAGE_NOT_FOUND);
         }
         // delete records in the database
         int result = fileMapper.deleteByPrimaryKey(id);
-        if (result != 1) {
+        if (result != SystemConstant.NUMBER_ONE) {
             throw new SiameseException(ResponseEnum.DELETE_IMAGE_FAILED);
         }
         // get group and path
         String groupAndPath = siameseFileEntity.getAddress().substring(fileProperties.getBaseAddress().length());
-        String group = groupAndPath.substring(0, groupAndPath.indexOf("/"));
-        String path = groupAndPath.substring(groupAndPath.indexOf("/") + 1);
+        String group = groupAndPath.substring(SystemConstant.NUMBER_ZERO, groupAndPath.indexOf(SystemConstant.STRING_SLASH));
+        String path = groupAndPath.substring(groupAndPath.indexOf(SystemConstant.STRING_SLASH) + SystemConstant.NUMBER_ONE);
         // delete real file
         fastFileStorageClient.deleteFile(group, path);
         return new SiameseResult(ResponseEnum.DELETE_IMAGE_SUCCESS);
