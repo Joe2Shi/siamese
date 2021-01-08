@@ -68,13 +68,13 @@ public class ImageServiceImpl implements ImageService {
             if (result != 1) {
                 // remove from file server
                 fastFileStorageClient.deleteFile(storePath.getFullPath());
-                throw new SiameseException(ResponseEnum.UPLOAD_IMAGE_FAILED);
+                throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
             }
             // return result
-            return new SiameseResult<>(ResponseEnum.UPLOAD_IMAGE_SUCCESS, address);
+            return new SiameseResult<>(ResponseEnum.UPLOAD_SUCCESS, address);
         } catch (IOException e) {
             log.error(LoggerConstant.UPLOAD_IMAGE_FAILED + e.getMessage());
-            throw new SiameseException(ResponseEnum.UPLOAD_IMAGE_FAILED);
+            throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
         }
     }
 
@@ -92,7 +92,7 @@ public class ImageServiceImpl implements ImageService {
         // delete records in the database
         int result = fileMapper.deleteByPrimaryKey(id);
         if (result != SystemConstant.NUMBER_ONE) {
-            throw new SiameseException(ResponseEnum.DELETE_IMAGE_FAILED);
+            throw new SiameseException(ResponseEnum.DELETE_FAILED);
         }
         // get group and path
         String groupAndPath = siameseFileEntity.getAddress().substring(fileProperties.getBaseAddress().length());
@@ -100,16 +100,16 @@ public class ImageServiceImpl implements ImageService {
         String path = groupAndPath.substring(groupAndPath.indexOf(SystemConstant.STRING_SLASH) + SystemConstant.NUMBER_ONE);
         // delete real file
         fastFileStorageClient.deleteFile(group, path);
-        return new SiameseResult(ResponseEnum.DELETE_IMAGE_SUCCESS);
+        return new SiameseResult(ResponseEnum.DELETE_SUCCESS);
     }
 
     @Override
-    public SiameseResult<List<SiameseFileEntity>> queryAllImage() {
+    public SiameseResult<List<SiameseFileEntity>> queryImages() {
         SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
         siameseFileEntity.setType(FileGroupConstant.IMAGE_GROUP);
         List<SiameseFileEntity> items = fileMapper.select(siameseFileEntity);
         if (!CollectionUtils.isEmpty(items))
-            return new SiameseResult<>(ResponseEnum.QUERY_IMAGE_SUCCESS, items);
+            return new SiameseResult<>(ResponseEnum.QUERY_SUCCESS, items);
         else
             throw new SiameseException(ResponseEnum.IMAGE_NOT_FOUND);
     }

@@ -18,4 +18,9 @@ public class MarkdownServiceProxyHystrix implements MarkdownServiceProxy {
     public SiameseResult deleteMarkdown(String id) {
         return new SiameseResult(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
+
+    @Override
+    public SiameseResult queryMarkdowns() {
+        return new SiameseResult(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
+    }
 }

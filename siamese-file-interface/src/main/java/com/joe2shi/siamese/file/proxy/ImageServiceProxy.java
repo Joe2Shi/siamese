@@ -16,6 +16,6 @@ public interface ImageServiceProxy {
     @DeleteMapping("{id}")
     SiameseResult deleteImage(@PathVariable("id") String id);
 
-    @GetMapping("images")
-    SiameseResult queryAllImage();
+    @GetMapping("items")
+    SiameseResult queryImages();
 }

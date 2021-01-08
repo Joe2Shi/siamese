@@ -15,4 +15,7 @@ public interface MarkdownServiceProxy {
 
     @DeleteMapping("{id}")
     SiameseResult deleteMarkdown(@PathVariable("id") String id);
+
+    @GetMapping("items")
+    SiameseResult queryMarkdowns();
 }

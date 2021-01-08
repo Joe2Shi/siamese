@@ -24,4 +24,9 @@ public class MarkdownServiceImpl implements MarkdownService {
     public SiameseResult deleteMarkdown(String id) {
         return markdownServiceProxy.deleteMarkdown(id);
     }
+
+    @Override
+    public SiameseResult queryMarkdowns() {
+        return markdownServiceProxy.queryMarkdowns();
+    }
 }

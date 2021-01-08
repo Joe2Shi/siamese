@@ -20,4 +20,11 @@ public interface MarkdownService {
      * @return
      */
     SiameseResult deleteMarkdown(String id);
+
+    /**
+     * query all markdown
+     *
+     * @return
+     */
+    SiameseResult queryMarkdowns();
 }

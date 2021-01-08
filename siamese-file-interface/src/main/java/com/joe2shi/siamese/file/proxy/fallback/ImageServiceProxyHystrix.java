@@ -20,7 +20,7 @@ public class ImageServiceProxyHystrix implements ImageServiceProxy {
     }
 
     @Override
-    public SiameseResult queryAllImage() {
+    public SiameseResult queryImages() {
         return new SiameseResult(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 }

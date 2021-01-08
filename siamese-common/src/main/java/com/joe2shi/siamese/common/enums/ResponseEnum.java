@@ -8,21 +8,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public enum ResponseEnum {
-    QUERY_IMAGE_SUCCESS(20000, "query image success"),
-    UPLOAD_IMAGE_SUCCESS(20000, "upload image success"),
-    DELETE_IMAGE_SUCCESS(20000, "delete image success"),
-    UPLOAD_MARKDOWN_SUCCESS(20000, "upload markdown success"),
-    DELETE_MARKDOWN_SUCCESS(20000, "delete markdown success"),
+    QUERY_SUCCESS(20000, "query success"),
+    UPLOAD_SUCCESS(20000, "upload success"),
+    DELETE_SUCCESS(20000, "delete success"),
 
     INVALID_FILE_TYPE(40000, "invalid file type"),
 
     IMAGE_NOT_FOUND(40004, "image not found"),
     MARKDOWN_NOT_FOUND(40004, "markdown not found"),
 
-    UPLOAD_IMAGE_FAILED(50000, "upload image fail"),
-    DELETE_IMAGE_FAILED(50000, "delete image fail"),
-    UPLOAD_MARKDOWN_FAILED(50000, "upload markdown failed"),
-    DELETE_MARKDOWN_FAILED(50000, "delete markdown failed"),
+    UPLOAD_FAILED(50000, "upload fail"),
+    DELETE_FAILED(50000, "delete fail"),
     PLEASE_TRY_AGAIN_LATER(50000, "please try again later"),
     ;
     private Integer code;

@@ -25,4 +25,9 @@ public class MarkdownController {
     public ResponseEntity<SiameseResult> deleteMarkdown(@PathVariable("id") String id) {
         return ResponseEntity.ok(markdownService.deleteMarkdown(id));
     }
+
+    @GetMapping("items")
+    public ResponseEntity<SiameseResult> queryMarkdowns() {
+        return ResponseEntity.ok(markdownService.queryMarkdowns());
+    }
 }

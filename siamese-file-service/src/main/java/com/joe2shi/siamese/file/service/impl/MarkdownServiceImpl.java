@@ -16,11 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -57,13 +59,13 @@ public class MarkdownServiceImpl implements MarkdownService {
             if (result != SystemConstant.NUMBER_ONE) {
                 // remove from file server
                 fastFileStorageClient.deleteFile(storePath.getFullPath());
-                throw new SiameseException(ResponseEnum.UPLOAD_MARKDOWN_FAILED);
+                throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
             }
             // return result
-            return new SiameseResult(ResponseEnum.UPLOAD_MARKDOWN_SUCCESS);
+            return new SiameseResult(ResponseEnum.UPLOAD_SUCCESS);
         } catch (IOException e) {
             log.error(LoggerConstant.UPLOAD_MARKDOWN_FAILED + e.getMessage());
-            throw new SiameseException(ResponseEnum.UPLOAD_MARKDOWN_FAILED);
+            throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
         }
     }
 
@@ -81,14 +83,25 @@ public class MarkdownServiceImpl implements MarkdownService {
         // delete records in the database
         int result = fileMapper.deleteByPrimaryKey(id);
         if (result != SystemConstant.NUMBER_ONE) {
-            throw new SiameseException(ResponseEnum.DELETE_MARKDOWN_FAILED);
+            throw new SiameseException(ResponseEnum.DELETE_FAILED);
         }
         // get group and path
         String groupAndPath = siameseFileEntity.getAddress().substring(fileProperties.getBaseAddress().length());
-        String group = groupAndPath.substring(0, groupAndPath.indexOf(SystemConstant.STRING_SLASH));
+        String group = groupAndPath.substring(SystemConstant.NUMBER_ZERO, groupAndPath.indexOf(SystemConstant.STRING_SLASH));
         String path = groupAndPath.substring(groupAndPath.indexOf(SystemConstant.STRING_SLASH) + SystemConstant.NUMBER_ONE);
         // delete real file
         fastFileStorageClient.deleteFile(group, path);
-        return new SiameseResult(ResponseEnum.DELETE_MARKDOWN_SUCCESS);
+        return new SiameseResult(ResponseEnum.DELETE_SUCCESS);
+    }
+
+    @Override
+    public SiameseResult queryMarkdowns() {
+        SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
+        siameseFileEntity.setType(FileGroupConstant.MARKDOWN_GROUP);
+        List<SiameseFileEntity> items = fileMapper.select(siameseFileEntity);
+        if (!CollectionUtils.isEmpty(items))
+            return new SiameseResult<>(ResponseEnum.QUERY_SUCCESS, items);
+        else
+            throw new SiameseException(ResponseEnum.MARKDOWN_NOT_FOUND);
     }
 }

@@ -26,8 +26,8 @@ public class ImageController {
         return ResponseEntity.ok(imageService.deleteImage(id));
     }
 
-    @GetMapping("images")
-    public ResponseEntity<SiameseResult> queryAllImage() {
-        return ResponseEntity.ok(imageService.queryAllImage());
+    @GetMapping("items")
+    public ResponseEntity<SiameseResult> queryImages() {
+        return ResponseEntity.ok(imageService.queryImages());
     }
 }

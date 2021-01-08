@@ -25,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public SiameseResult queryAllImage() {
-        return imageServiceProxy.queryAllImage();
+    public SiameseResult queryImages() {
+        return imageServiceProxy.queryImages();
     }
 }

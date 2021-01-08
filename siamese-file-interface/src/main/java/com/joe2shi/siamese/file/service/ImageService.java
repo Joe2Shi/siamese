@@ -25,5 +25,5 @@ public interface ImageService {
      * query all image
      * @return
      */
-    SiameseResult queryAllImage();
+    SiameseResult queryImages();
 }
