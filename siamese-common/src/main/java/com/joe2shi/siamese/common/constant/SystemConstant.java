@@ -6,7 +6,8 @@ public class SystemConstant {
     public static final String STRING_DECIMAL_POINT = ".";
     public static final String STRING_SLASH = "/";
     public static final String STRING_HYPHEN = "-";
-    //number
+    public static final String HEADER_TOKEN = "token";
+    // number
     public static final Integer NUMBER_ZERO = 0;
     public static final Integer NUMBER_ONE = 1;
     public static final Integer NUMBER_TWO = 2;
