@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.file;
+package com.joe2shi.siamese.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,9 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan({"com.joe2shi.siamese.file","com.joe2shi.siamese.common"})
-public class SiameseFileInterfaceApplication {
+@ComponentScan({"com.joe2shi.siamese.auth","com.joe2shi.siamese.common"})
+public class SiameseAuthInterfaceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SiameseFileInterfaceApplication.class, args);
+        SpringApplication.run(SiameseAuthInterfaceApplication.class, args);
     }
 }

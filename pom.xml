@@ -12,6 +12,8 @@
         <module>siamese-common</module>
         <module>siamese-file-interface</module>
         <module>siamese-file-service</module>
+        <module>siamese-auth-interface</module>
+        <module>siamese-auth-service</module>
     </modules>
     <packaging>pom</packaging>
 
