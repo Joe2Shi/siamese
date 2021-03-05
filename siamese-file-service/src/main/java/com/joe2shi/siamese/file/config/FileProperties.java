@@ -8,9 +8,7 @@ import java.util.List;
 @Data
 @ConfigurationProperties(prefix = "siamese.file")
 public class FileProperties {
-
     private String baseAddress;
     private List<String> allowImageTypes;
     private List<String> allowTextTypes;
-
 }

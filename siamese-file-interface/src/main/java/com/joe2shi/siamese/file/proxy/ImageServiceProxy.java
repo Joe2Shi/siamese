@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient(name="siamese-file-service", fallback = ImageServiceProxyHystrix.class, path = "/image", contextId = "image")
+@FeignClient(name = "siamese-file-service", fallback = ImageServiceProxyHystrix.class, path = "/image", contextId = "image")
 @SuppressWarnings("rawtypes")
 public interface ImageServiceProxy {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

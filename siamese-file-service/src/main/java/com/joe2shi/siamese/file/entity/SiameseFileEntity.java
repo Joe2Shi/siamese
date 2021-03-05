@@ -1,5 +1,6 @@
 package com.joe2shi.siamese.file.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ public class SiameseFileEntity {
     @Id
     private String id;
     private String address;
+    @JsonIgnore
     private String type;
     private Long createTime;
 }

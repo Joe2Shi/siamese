@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan({"com.joe2shi.siamese.file","com.joe2shi.siamese.common"})
+@ComponentScan({"com.joe2shi.siamese.file", "com.joe2shi.siamese.common"})
 public class SiameseFileServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(SiameseFileServiceApplication.class, args);

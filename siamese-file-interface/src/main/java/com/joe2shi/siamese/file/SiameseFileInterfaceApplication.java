@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan({"com.joe2shi.siamese.file","com.joe2shi.siamese.common"})
+@ComponentScan({"com.joe2shi.siamese.file", "com.joe2shi.siamese.common"})
 public class SiameseFileInterfaceApplication {
     public static void main(String[] args) {
         SpringApplication.run(SiameseFileInterfaceApplication.class, args);

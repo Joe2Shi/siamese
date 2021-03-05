@@ -5,4 +5,5 @@ import com.joe2shi.siamese.file.base.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface FileMapper extends BaseMapper<SiameseFileEntity> {}
+public interface FileMapper extends BaseMapper<SiameseFileEntity> {
+}

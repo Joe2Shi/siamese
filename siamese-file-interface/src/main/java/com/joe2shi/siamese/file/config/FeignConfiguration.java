@@ -24,7 +24,7 @@ public class FeignConfiguration {
                 while (headerNames.hasMoreElements()) {
                     String name = headerNames.nextElement();
                     String values = request.getHeader(name);
-                    if (name.equalsIgnoreCase(SystemConstant.HEADER_TOKEN)) {
+                    if (name.equalsIgnoreCase(SystemConstant.STRING_ID)) {
                         template.header(name, values);
                     }
                 }
