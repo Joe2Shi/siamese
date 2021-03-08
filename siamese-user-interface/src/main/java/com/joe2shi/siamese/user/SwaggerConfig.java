@@ -24,7 +24,7 @@ public class SwaggerConfig {
             .globalOperationParameters(parameters)
             .host("api.joe2shi.com/api/siamese-user-interface")
             .groupName("siamese-user-interface")
-            .useDefaultResponseMessages(false)
+            .useDefaultResponseMessages(Boolean.FALSE)
             .apiInfo(apiInfo())
             .select()
             .apis(RequestHandlerSelectors.basePackage("com.joe2shi.siamese.user.controller"))

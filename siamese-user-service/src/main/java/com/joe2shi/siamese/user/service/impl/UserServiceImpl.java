@@ -63,12 +63,12 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(SiameseUserEntity.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo(SystemConstant.STRING_USERNAME, username);
-        criteria.orEqualTo(SystemConstant.STRING_PHONE_NUMBER, username);
+        criteria.orEqualTo(SystemConstant.STRING_PHONE_NUMBER, phoneNumber);
         SiameseUserEntity item = userMapper.selectOneByExample(example);
         if (!ObjectUtils.isEmpty(item)) {
             if (username.equals(item.getUsername())) {
                 // Username already exists
-                throw new SiameseException(ResponseEnum.USERNAME_ALREADY_EXISTS);
+                throw new SiameseException(ResponseEnum.USERNAME_ALREADY_USE);
             }
             if (phoneNumber.equals(item.getPhoneNumber())) {
                 // Phone number has been bound
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         }
         try {
             // Insert user information
-            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.STRING_HYPHEN, SystemConstant.STRING_NULL);
+            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.CHARACTER_HYPHEN, SystemConstant.CHARACTER_NULL);
             // Encryption password
             String md5Password = Md5Utils.getMD5(password.getBytes());
             SiameseUserEntity siameseUserEntity = new SiameseUserEntity();

@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("markdown")
-@CrossOrigin
 @SuppressWarnings("rawtypes")
 public class MarkdownController {
     @Resource

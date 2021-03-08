@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("image")
-@CrossOrigin
 @SuppressWarnings("rawtypes")
 public class ImageController {
     @Resource

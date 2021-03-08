@@ -72,10 +72,10 @@ public class RsaUtils {
         SecureRandom secureRandom = new SecureRandom(secret.getBytes());
         keyPairGenerator.initialize(SystemConstant.ONE_THOUSAND_AND_TWENTY_FOUR, secureRandom);
         KeyPair keyPair = keyPairGenerator.genKeyPair();
-        // 获取公钥并写出
+
         byte[] publicKeyBytes = keyPair.getPublic().getEncoded();
         writeFile(publicKeyFilename, publicKeyBytes);
-        // 获取私钥并写出
+
         byte[] privateKeyBytes = keyPair.getPrivate().getEncoded();
         writeFile(privateKeyFilename, privateKeyBytes);
     }

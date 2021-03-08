@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@CrossOrigin
 @SuppressWarnings("rawtypes")
 public class UserController {
     @Resource

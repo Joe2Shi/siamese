@@ -54,11 +54,11 @@ public class ImageServiceImpl implements ImageService {
                 throw new SiameseException(ResponseEnum.INVALID_FILE_TYPE);
             }
             // upload file service
-            String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), SystemConstant.STRING_DECIMAL_POINT);
+            String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), SystemConstant.CHARACTER_DECIMAL_POINT);
             StorePath storePath = fastFileStorageClient.uploadFile(FileGroupConstant.IMAGE_GROUP, file.getInputStream(), file.getSize(), extension);
             String address = fileProperties.getBaseAddress() + storePath.getFullPath();
             // insert database
-            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.STRING_HYPHEN, SystemConstant.STRING_NULL);
+            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.CHARACTER_HYPHEN, SystemConstant.CHARACTER_NULL);
             SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
             siameseFileEntity.setId(id);
             siameseFileEntity.setAddress(address);
@@ -96,8 +96,8 @@ public class ImageServiceImpl implements ImageService {
         }
         // get group and path
         String groupAndPath = siameseFileEntity.getAddress().substring(fileProperties.getBaseAddress().length());
-        String group = groupAndPath.substring(SystemConstant.NUMBER_ZERO, groupAndPath.indexOf(SystemConstant.STRING_SLASH));
-        String path = groupAndPath.substring(groupAndPath.indexOf(SystemConstant.STRING_SLASH) + SystemConstant.NUMBER_ONE);
+        String group = groupAndPath.substring(SystemConstant.NUMBER_ZERO, groupAndPath.indexOf(SystemConstant.CHARACTER_SLASH));
+        String path = groupAndPath.substring(groupAndPath.indexOf(SystemConstant.CHARACTER_SLASH) + SystemConstant.NUMBER_ONE);
         // delete real file
         fastFileStorageClient.deleteFile(group, path);
         return new SiameseResult(ResponseEnum.DELETE_SUCCESS);

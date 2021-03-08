@@ -19,7 +19,6 @@ public class JwtProperties {
     @PostConstruct
     public void init() {
         try {
-
             this.publicKey = RsaUtils.getPublicKey(publicKeyPath);
         } catch (Exception e) {
             log.error(LoggerConstant.INIT_KEY_FAILED + e.getMessage());

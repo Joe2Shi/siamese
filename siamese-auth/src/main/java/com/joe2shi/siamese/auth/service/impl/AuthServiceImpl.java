@@ -38,6 +38,8 @@ public class AuthServiceImpl implements AuthService {
             // Generate token
             UserInfo userInfo = new UserInfo((String) result.getData());
             String token = JwtUtils.generateToken(userInfo, jwtProperties.getPrivateKey(), jwtProperties.getExpire());
+            // Save in redis, duration is 30 minutes
+            
             return new SiameseResult<>(ResponseEnum.SIGN_IN_SUCCESS, token);
         } catch (Exception e) {
             log.error(LoggerConstant.GENERATE_TOKEN_FAILED + e.getMessage());
