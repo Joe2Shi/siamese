@@ -18,7 +18,6 @@ public class JwtProperties {
     private String secret;
     private String publicKeyPath;
     private String privateKeyPath;
-    private Integer expire;
     private PublicKey publicKey;
     private PrivateKey privateKey;
 

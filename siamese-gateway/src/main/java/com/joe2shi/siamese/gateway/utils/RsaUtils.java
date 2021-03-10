@@ -1,6 +1,8 @@
 package com.joe2shi.siamese.gateway.utils;
 
+import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.common.constant.SystemConstant;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+@Slf4j
 public class RsaUtils {
     /**
      * 从文件中读取公钥
@@ -66,6 +69,7 @@ public class RsaUtils {
      * @param publicKeyFilename  公钥文件路径
      * @param privateKeyFilename 私钥文件路径
      * @param secret             生成密钥的密文
+     * @throws Exception
      */
     public static void generateKey(String publicKeyFilename, String privateKeyFilename, String secret) throws Exception {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(SystemConstant.STRING_RSA);
@@ -87,7 +91,10 @@ public class RsaUtils {
     private static void writeFile(String destPath, byte[] bytes) throws IOException {
         File dest = new File(destPath);
         if (!dest.exists()) {
-            boolean newFile = dest.createNewFile();
+            boolean result = dest.createNewFile();
+            if (!result) {
+                log.error(LoggerConstant.CREATE_KEY_FILE_FAILED);
+            }
         }
         Files.write(dest.toPath(), bytes);
     }

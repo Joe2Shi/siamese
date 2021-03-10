@@ -50,13 +50,13 @@ public class UserServiceImpl implements UserService {
         String password = registerBo.getPassword();
         String phoneNumber = registerBo.getPhoneNumber();
         // Check user information
-        if (!username.matches(RegularConstant.checkUsername)) {
+        if (!username.matches(RegularConstant.CHECK_USERNAME)) {
             throw new SiameseException(ResponseEnum.INVALID_USERNAME);
         }
-        if (!password.matches(RegularConstant.checkPassword)) {
+        if (!password.matches(RegularConstant.CHECK_SECRET_CODE)) {
             throw new SiameseException(ResponseEnum.INVALID_PASSWORD);
         }
-        if (!phoneNumber.matches(RegularConstant.checkPhoneNumber)) {
+        if (!phoneNumber.matches(RegularConstant.CHECK_PHONE_NUMBER)) {
             throw new SiameseException(ResponseEnum.INVALID_PHONE_NUMBER);
         }
         // Check username or phone number exist

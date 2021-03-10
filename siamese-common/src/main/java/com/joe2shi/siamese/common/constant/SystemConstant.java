@@ -11,6 +11,7 @@ public class SystemConstant {
     public static final String STRING_MATCH_ALL_PATH = "/**";
     public static final String STRING_TOKEN = "token";
     public static final String STRING_ID = "id";
+    public static final String STRING_TIMESTAMP = "timestamp";
     public static final String STRING_RSA = "RSA";
     public static final String STRING_USERNAME = "username";
     public static final String STRING_PHONE_NUMBER = "phoneNumber";
@@ -25,6 +26,7 @@ public class SystemConstant {
     public static final int NUMBER_SEVEN = 7;
     public static final int NUMBER_EIGHT = 8;
     public static final int NUMBER_NINE = 9;
+    public static final int NUMBER_THIRTY = 30;
     public static final int ONE_THOUSAND_AND_TWENTY_FOUR = 1024;
     public static final int SUCCESS_CODE = 20000;
     // domain

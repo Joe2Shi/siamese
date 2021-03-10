@@ -6,16 +6,16 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${nacos.server-address}
+        server-addr: ${nacos.path}
         namespace: ${nacos.namespace}
         group: ${nacos.group}
       config:
-        server-addr: ${nacos.server-address}
+        server-addr: ${nacos.path}
         namespace: ${nacos.namespace}
         group: ${nacos.group}
-        file-extension: yml
+        file-extension: yaml
 
 nacos:
-  server-address: 192.168.1.124:8848
-  namespace: fda4fd06-c23e-4981-ba13-8cdacb0bef0e
+  path: 192.168.1.124:8848
+  namespace: 5ec3460f-96bb-47d4-a660-0a0dd82900cd
   group: SIAMESE_GROUP

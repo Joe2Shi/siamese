@@ -64,10 +64,6 @@
             <artifactId>jjwt</artifactId>
         </dependency>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.joe2shi.siamese</groupId>
             <artifactId>siamese-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>

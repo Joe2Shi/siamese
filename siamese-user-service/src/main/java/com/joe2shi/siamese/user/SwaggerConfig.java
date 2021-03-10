@@ -37,7 +37,6 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
             .title("Siamese User Service")
             .description("")
-            .contact("Joe: joe2shi0628@gmail.com")
             .version("1.0")
             .build();
     }
