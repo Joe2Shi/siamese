@@ -22,7 +22,7 @@ public class SwaggerConfig {
         List<Parameter> parameters = new ArrayList<>();
         return new Docket(DocumentationType.SWAGGER_2)
             .globalOperationParameters(parameters)
-            .host("api.joe2shi.com/api/siamese-user-interface")
+            .host("api.joe2shi.com/siamese-user-interface")
             .groupName("siamese-user-interface")
             .useDefaultResponseMessages(Boolean.FALSE)
             .apiInfo(apiInfo())

@@ -1,6 +1,8 @@
 package com.joe2shi.siamese.gateway.config;
 
 import com.joe2shi.siamese.common.constant.SystemConstant;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,12 +10,20 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.List;
+
+@Data
 @Configuration
+@ConfigurationProperties(prefix = "siamese.domain")
 public class GlobalCorsConfig {
+    private List<String> allowDomains;
+
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin(SystemConstant.DOMAIN_MANAGE);
+        for (String domain : allowDomains) {
+            config.addAllowedOrigin(domain);
+        }
         config.setAllowCredentials(Boolean.TRUE);
         config.addAllowedMethod(HttpMethod.OPTIONS);
         config.addAllowedMethod(HttpMethod.HEAD);

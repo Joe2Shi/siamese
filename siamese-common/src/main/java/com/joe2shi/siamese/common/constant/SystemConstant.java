@@ -29,6 +29,4 @@ public class SystemConstant {
     public static final int NUMBER_THIRTY = 30;
     public static final int ONE_THOUSAND_AND_TWENTY_FOUR = 1024;
     public static final int SUCCESS_CODE = 20000;
-    // domain
-    public static final String DOMAIN_MANAGE = "http://manage.joe2shi.com";
 }
