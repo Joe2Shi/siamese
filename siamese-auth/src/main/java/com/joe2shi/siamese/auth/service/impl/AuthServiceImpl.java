@@ -12,6 +12,7 @@ import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,19 @@ public class AuthServiceImpl implements AuthService {
             if (result.getCode() != SystemConstant.SUCCESS_CODE) {
                 return result;
             }
-            // Generate token
+            // Extend the token time if you have already sign in
             UserInfo userInfo = new UserInfo((String) result.getData(), System.currentTimeMillis());
-            String token = JwtUtils.generateToken(userInfo, jwtProperties.getPrivateKey());
-            // Save in redis, duration is 30 minutes
-            redisTemplate.boundValueOps(token).set(token, SystemConstant.NUMBER_THIRTY, TimeUnit.MINUTES);
-            return new SiameseResult<>(ResponseEnum.SIGN_IN_SUCCESS, token);
+            String redisToken = redisTemplate.boundValueOps(userInfo.getId()).get();
+            if (!StringUtils.isBlank(redisToken)) {
+                redisTemplate.expire(userInfo.getId(), SystemConstant.NUMBER_THIRTY, TimeUnit.MINUTES);
+                return new SiameseResult<>(ResponseEnum.SIGN_IN_SUCCESS, redisToken);
+            } else {
+                // Generate token
+                String token = JwtUtils.generateToken(userInfo, jwtProperties.getPrivateKey());
+                // Save in redis, duration is 30 minutes
+                redisTemplate.boundValueOps(userInfo.getId()).set(token, SystemConstant.NUMBER_THIRTY, TimeUnit.MINUTES);
+                return new SiameseResult<>(ResponseEnum.SIGN_IN_SUCCESS, token);
+            }
         } catch (Exception e) {
             log.error(LoggerConstant.GENERATE_TOKEN_FAILED + e.getMessage());
             throw new SiameseException(ResponseEnum.GENERATE_TOKEN_FAILED);

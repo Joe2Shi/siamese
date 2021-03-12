@@ -14,6 +14,7 @@ import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
@@ -101,13 +102,19 @@ public class UserServiceImpl implements UserService {
     public SiameseResult accredit(AccreditBo accreditBo) {
         String username = accreditBo.getUsername();
         String password = accreditBo.getPassword();
+        if (StringUtils.isBlank(username)) {
+            throw new SiameseException(ResponseEnum.USERNAME_IS_REQUIRED);
+        }
+        if (StringUtils.isBlank(password)) {
+            throw new SiameseException(ResponseEnum.PASSWORD_IS_REQUIRED);
+        }
         Example example = new Example(SiameseUserEntity.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo(SystemConstant.STRING_USERNAME, username);
         criteria.orEqualTo(SystemConstant.STRING_PHONE_NUMBER, username);
         SiameseUserEntity item = userMapper.selectOneByExample(example);
         if (ObjectUtils.isEmpty(item) || !Md5Utils.getMD5(password.getBytes()).equals(item.getPassword())) {
-            throw new SiameseException(ResponseEnum.WRONG_USERNAME_OR_PASSWORD);
+            throw new SiameseException(ResponseEnum.WRONG_PASSWORD);
         }
         return new SiameseResult<>(ResponseEnum.ACCREDIT_SUCCESS, item.getId());
     }

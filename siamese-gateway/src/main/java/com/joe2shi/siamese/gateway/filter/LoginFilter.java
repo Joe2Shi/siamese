@@ -56,12 +56,12 @@ public class LoginFilter extends ZuulFilter {
         HttpServletRequest request = context.getRequest();
         String token = request.getHeader(SystemConstant.STRING_TOKEN);
         try {
-            String redisToken = redisTemplate.boundValueOps(token).get();
-            if (!StringUtils.isBlank(redisToken)) {
+            UserInfo userInfo = JwtUtils.getInfoFromToken(token, jwtProperties.getPublicKey());
+            String redisToken = redisTemplate.boundValueOps(userInfo.getId()).get();
+            if (!StringUtils.isBlank(redisToken) && token.equals(redisToken)) {
                 // token available extension of time
-                redisTemplate.expire(token, SystemConstant.NUMBER_THIRTY, TimeUnit.MINUTES);
-                UserInfo info = JwtUtils.getInfoFromToken(token, jwtProperties.getPublicKey());
-                context.addZuulRequestHeader(SystemConstant.STRING_ID, info.getId());
+                redisTemplate.expire(userInfo.getId(), SystemConstant.NUMBER_THIRTY, TimeUnit.MINUTES);
+                context.addZuulRequestHeader(SystemConstant.STRING_ID, userInfo.getId());
             } else {
                 // token invalid or tampered
                 throw new RuntimeException(LoggerConstant.INVALID_TOKEN);
