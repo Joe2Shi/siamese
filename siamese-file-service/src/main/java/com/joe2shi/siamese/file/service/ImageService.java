@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 @SuppressWarnings("rawtypes")
 public interface ImageService {
     /**
-     * upload image
+     * Upload image
      *
      * @param file
      * @return
@@ -14,7 +14,7 @@ public interface ImageService {
     SiameseResult uploadImage(MultipartFile file);
 
     /**
-     * delete image
+     * Delete image
      *
      * @param id
      * @return
@@ -22,7 +22,7 @@ public interface ImageService {
     SiameseResult deleteImage(String id);
 
     /**
-     * query all image
+     * Query all image
      *
      * @return
      */

@@ -32,7 +32,6 @@ public class SwaggerConfig {
             .build();
     }
 
-    @SuppressWarnings("deprecation")
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
             .title("Siamese File API")

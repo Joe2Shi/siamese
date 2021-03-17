@@ -7,6 +7,8 @@ public class SystemConstant {
     public static final String CHARACTER_SLASH = "/";
     public static final String CHARACTER_HYPHEN = "-";
     public static final String CHARACTER_ASTERISK = "*";
+    public static final String CHARACTER_SPACE = " ";
+    public static final String CHARACTER_PERCENT_SIGN = "%";
     // string
     public static final String STRING_MATCH_ALL_PATH = "/**";
     public static final String STRING_TOKEN = "token";
@@ -15,6 +17,10 @@ public class SystemConstant {
     public static final String STRING_RSA = "RSA";
     public static final String STRING_USERNAME = "username";
     public static final String STRING_PHONE_NUMBER = "phoneNumber";
+    public static final String STRING_DESC = "DESC";
+    public static final String STRING_ASC = "ASC";
+    public static final String STRING_TITLE = "title";
+    public static final String STRING_TAG = "tag";
     // number
     public static final int NUMBER_ZERO = 0;
     public static final int NUMBER_ONE = 1;

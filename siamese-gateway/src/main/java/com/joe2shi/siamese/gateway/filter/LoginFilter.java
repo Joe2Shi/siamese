@@ -69,7 +69,7 @@ public class LoginFilter extends ZuulFilter {
         } catch (Exception e) {
             log.warn(e.getMessage());
             context.setSendZuulResponse(Boolean.FALSE);
-            context.setResponseStatusCode(HttpStatus.FORBIDDEN.value());
+            context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         }
         return null;
     }

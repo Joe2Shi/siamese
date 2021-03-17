@@ -34,10 +34,10 @@ public class UserServiceImpl implements UserService {
         SiameseUserEntity siameseUserEntity = new SiameseUserEntity();
         switch (checkBo.getType()) {
             case SystemConstant.NUMBER_ONE:
-                siameseUserEntity.setUsername(checkBo.getData());
+                siameseUserEntity.setUsername(checkBo.getData().trim());
                 break;
             case SystemConstant.NUMBER_TWO:
-                siameseUserEntity.setPhoneNumber(checkBo.getData());
+                siameseUserEntity.setPhoneNumber(checkBo.getData().trim());
                 break;
             default:
                 throw new SiameseException(ResponseEnum.INVALID_USER_DATA_TYPE);
@@ -47,9 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SiameseResult register(RegisterBo registerBo) {
-        String username = registerBo.getUsername();
-        String password = registerBo.getPassword();
-        String phoneNumber = registerBo.getPhoneNumber();
+        String username = registerBo.getUsername().trim();
+        String password = registerBo.getPassword().trim();
+        String phoneNumber = registerBo.getPhoneNumber().trim();
         // Check user information
         if (!username.matches(RegularConstant.CHECK_USERNAME)) {
             throw new SiameseException(ResponseEnum.INVALID_USERNAME);
@@ -100,8 +100,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SiameseResult accredit(AccreditBo accreditBo) {
-        String username = accreditBo.getUsername();
-        String password = accreditBo.getPassword();
+        String username = accreditBo.getUsername().trim();
+        String password = accreditBo.getPassword().trim();
         if (StringUtils.isBlank(username)) {
             throw new SiameseException(ResponseEnum.USERNAME_IS_REQUIRED);
         }

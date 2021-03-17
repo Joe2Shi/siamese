@@ -15,6 +15,8 @@
         <module>siamese-file-service</module>
         <module>siamese-user-interface</module>
         <module>siamese-user-service</module>
+        <module>siamese-item-interface</module>
+        <module>siamese-item-service</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -112,12 +114,14 @@
     </dependencyManagement>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

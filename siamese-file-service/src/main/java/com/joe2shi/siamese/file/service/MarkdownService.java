@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 @SuppressWarnings("rawtypes")
 public interface MarkdownService {
     /**
-     * upload markdown file
+     * Upload markdown file
      *
      * @param file
      * @return
@@ -14,7 +14,7 @@ public interface MarkdownService {
     SiameseResult uploadMarkdown(MultipartFile file);
 
     /**
-     * delete markdown file
+     * Delete markdown file
      *
      * @param id
      * @return
@@ -22,7 +22,7 @@ public interface MarkdownService {
     SiameseResult deleteMarkdown(String id);
 
     /**
-     * query all markdown
+     * Query all markdown
      *
      * @return
      */

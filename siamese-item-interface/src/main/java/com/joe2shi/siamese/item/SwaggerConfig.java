@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.file;
+package com.joe2shi.siamese.item;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,22 +22,21 @@ public class SwaggerConfig {
         List<Parameter> parameters = new ArrayList<>();
         return new Docket(DocumentationType.SWAGGER_2)
             .globalOperationParameters(parameters)
-            .host("api.joe2shi.com/siamese-file-service")
-            .groupName("siamese-file-service")
+            .host("api.joe2shi.com/siamese-item-interface")
+            .groupName("siamese-item-interface")
             .useDefaultResponseMessages(Boolean.FALSE)
             .apiInfo(apiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.joe2shi.siamese.file.controller"))
+            .apis(RequestHandlerSelectors.basePackage("com.joe2shi.siamese.item.controller"))
             .paths(PathSelectors.any())
             .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Siamese File Service")
+            .title("Siamese Item API")
             .description("")
             .version("1.0")
             .build();
     }
 }
-
