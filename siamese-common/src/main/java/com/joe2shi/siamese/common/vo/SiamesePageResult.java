@@ -1,17 +1,15 @@
 package com.joe2shi.siamese.common.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SiamesePageResult<T> {
     private Long total;
-    private Long totalPage;
     private List<T> items;
-
-    public SiamesePageResult(Long total, List<T> items) {
-        this.total = total;
-        this.items = items;
-    }
 }
