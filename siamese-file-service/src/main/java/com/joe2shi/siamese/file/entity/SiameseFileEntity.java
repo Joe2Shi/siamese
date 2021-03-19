@@ -3,6 +3,7 @@ package com.joe2shi.siamese.file.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,8 +12,9 @@ import javax.persistence.Table;
 public class SiameseFileEntity {
     @Id
     private String id;
-    private String address;
     @JsonIgnore
-    private String type;
+    @Column(name = "`group`")
+    private String group;
+    private String address;
     private Long createTime;
 }

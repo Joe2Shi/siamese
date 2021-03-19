@@ -2,7 +2,6 @@ package com.joe2shi.siamese.file.service.impl;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.joe2shi.siamese.common.constant.FileGroupConstant;
 import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
@@ -46,23 +45,23 @@ public class MarkdownServiceImpl implements MarkdownService {
             }
             // upload file service
             String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), SystemConstant.CHARACTER_DECIMAL_POINT);
-            StorePath storePath = fastFileStorageClient.uploadFile(FileGroupConstant.MARKDOWN_GROUP, file.getInputStream(), file.getSize(), extension);
+            StorePath storePath = fastFileStorageClient.uploadFile(SystemConstant.STRING_MARKDOWN, file.getInputStream(), file.getSize(), extension);
             String address = fileProperties.getBaseAddress() + storePath.getFullPath();
             // insert database
             String id = UUID.randomUUID().toString().replaceAll(SystemConstant.CHARACTER_HYPHEN, SystemConstant.CHARACTER_NULL);
             SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
             siameseFileEntity.setId(id);
+            siameseFileEntity.setGroup(SystemConstant.CHARACTER_M);
             siameseFileEntity.setAddress(address);
-            siameseFileEntity.setType(FileGroupConstant.MARKDOWN_GROUP);
             siameseFileEntity.setCreateTime(System.currentTimeMillis());
             int result = fileMapper.insert(siameseFileEntity);
-            if (result != SystemConstant.NUMBER_ONE) {
+            if (result < SystemConstant.NUMBER_ONE) {
                 // remove from file server
                 fastFileStorageClient.deleteFile(storePath.getFullPath());
                 throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
             }
             // return result
-            return new SiameseResult(ResponseEnum.UPLOAD_SUCCESS);
+            return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
         } catch (IOException e) {
             log.error(LoggerConstant.UPLOAD_MARKDOWN_FAILED + e.getMessage());
             throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
@@ -74,11 +73,8 @@ public class MarkdownServiceImpl implements MarkdownService {
     public SiameseResult deleteMarkdown(String id) {
         // query whether the record exists
         SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
-        if (ObjectUtils.isEmpty(siameseFileEntity)) {
-            throw new SiameseException(ResponseEnum.MARKDOWN_NOT_FOUND);
-        }
-        if (!FileGroupConstant.MARKDOWN_GROUP.equals(siameseFileEntity.getType())) {
-            throw new SiameseException(ResponseEnum.MARKDOWN_NOT_FOUND);
+        if (ObjectUtils.isEmpty(siameseFileEntity) || !SystemConstant.CHARACTER_M.equals(siameseFileEntity.getGroup())) {
+            throw new SiameseException(ResponseEnum.RECORD_NOT_FOUND);
         }
         // delete records in the database
         int result = fileMapper.deleteByPrimaryKey(id);
@@ -91,17 +87,17 @@ public class MarkdownServiceImpl implements MarkdownService {
         String path = groupAndPath.substring(groupAndPath.indexOf(SystemConstant.CHARACTER_SLASH) + SystemConstant.NUMBER_ONE);
         // delete real file
         fastFileStorageClient.deleteFile(group, path);
-        return new SiameseResult(ResponseEnum.DELETE_SUCCESS);
+        return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
     }
 
     @Override
     public SiameseResult queryMarkdowns() {
         SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
-        siameseFileEntity.setType(FileGroupConstant.MARKDOWN_GROUP);
+        siameseFileEntity.setGroup(SystemConstant.CHARACTER_M);
         List<SiameseFileEntity> items = fileMapper.select(siameseFileEntity);
         if (!CollectionUtils.isEmpty(items))
-            return new SiameseResult<>(ResponseEnum.QUERY_SUCCESS, items);
+            return new SiameseResult<>(ResponseEnum.REQUEST_ACCEPTED, items);
         else
-            throw new SiameseException(ResponseEnum.MARKDOWN_NOT_FOUND);
+            throw new SiameseException(ResponseEnum.RECORD_NOT_FOUND);
     }
 }

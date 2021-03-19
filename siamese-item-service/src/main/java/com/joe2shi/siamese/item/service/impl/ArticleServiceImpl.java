@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
+import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.vo.SiamesePageResult;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.item.entity.SiameseArticleEntity;
@@ -12,9 +13,11 @@ import com.joe2shi.siamese.item.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -37,6 +40,18 @@ public class ArticleServiceImpl implements ArticleService {
             example.setOrderByClause(sort);
         }
         Page<SiameseArticleEntity> pageInfo = (Page<SiameseArticleEntity>) articleMapper.selectByExample(example);
-        return new SiameseResult<>(ResponseEnum.QUERY_SUCCESS, new SiamesePageResult<>(pageInfo.getTotal(), pageInfo));
+        return new SiameseResult<>(ResponseEnum.REQUEST_ACCEPTED, new SiamesePageResult<>(pageInfo.getTotal(), pageInfo));
+    }
+
+    @Override
+    public SiameseResult deleteByIds(List<String> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            throw new SiameseException(ResponseEnum.IDS_IS_REQUIRED);
+        }
+        int result = articleMapper.deleteByIdList(ids);
+        if (result < SystemConstant.NUMBER_ONE) {
+            throw new SiameseException(ResponseEnum.RECORD_NOT_FOUND);
+        }
+        return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
     }
 }

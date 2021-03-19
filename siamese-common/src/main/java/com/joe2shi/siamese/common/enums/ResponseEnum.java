@@ -9,15 +9,17 @@ import lombok.NoArgsConstructor;
 @Getter
 public enum ResponseEnum {
     /**
+     * Don't prompt
+     */
+    REQUEST_ACCEPTED(10000, "Request accepted"),
+    WRONG_PASSWORD(10001, "Wrong password"),
+    /**
      * 200
      */
+    OPERATING_SUCCESS(20000, "Operating success"),
     REGISTER_SUCCESS(20000, "Register success"),
-    VALIDATION_SUCCESS(20000, "Validation success"),
     SIGN_IN_SUCCESS(20000, "Sign in success"),
     ACCREDIT_SUCCESS(20000, "Accredit success"),
-    QUERY_SUCCESS(20000, "Query success"),
-    UPLOAD_SUCCESS(20000, "Upload success"),
-    DELETE_SUCCESS(20000, "Delete success"),
     /**
      * 400
      */
@@ -25,18 +27,16 @@ public enum ResponseEnum {
     INVALID_USERNAME(40001, "Invalid username"),
     INVALID_PASSWORD(40002, "Invalid password"),
     INVALID_PHONE_NUMBER(40003, "Invalid phone number"),
-    WRONG_PASSWORD(40004, "Wrong password"),
     INVALID_USER_DATA_TYPE(40005, "Invalid user data type"),
     USERNAME_ALREADY_USE(40006, "Username already use"),
     PHONE_NUMBER_HAS_BEEN_BOUND(40007, "Phone number has been bound"),
     USERNAME_IS_REQUIRED(40008, "Username is required"),
     PASSWORD_IS_REQUIRED(40009, "Password is required"),
+    IDS_IS_REQUIRED(40010, "Ids is required"),
     /**
      * 404
      */
-    USER_INFORMATION_NOT_FOUND(40401, "User information not found"),
-    IMAGE_NOT_FOUND(40402, "Image not found"),
-    MARKDOWN_NOT_FOUND(40403, "Markdown not found"),
+    RECORD_NOT_FOUND(40400, "Record not found"),
     /**
      * 500
      */

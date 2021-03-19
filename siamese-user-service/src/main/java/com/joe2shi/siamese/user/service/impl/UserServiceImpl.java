@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
             default:
                 throw new SiameseException(ResponseEnum.INVALID_USER_DATA_TYPE);
         }
-        return new SiameseResult<>(ResponseEnum.VALIDATION_SUCCESS, userMapper.selectCount(siameseUserEntity) == SystemConstant.NUMBER_ZERO);
+        return new SiameseResult<>(ResponseEnum.REQUEST_ACCEPTED, userMapper.selectCount(siameseUserEntity) == SystemConstant.NUMBER_ZERO);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
             siameseUserEntity.setPhoneNumber(phoneNumber);
             siameseUserEntity.setCreateTime(System.currentTimeMillis());
             int result = userMapper.insert(siameseUserEntity);
-            if (result != SystemConstant.NUMBER_ONE) {
+            if (result < SystemConstant.NUMBER_ONE) {
                 throw new SiameseException(ResponseEnum.REGISTER_FAILED);
             }
             return new SiameseResult(ResponseEnum.REGISTER_SUCCESS);
@@ -123,8 +123,8 @@ public class UserServiceImpl implements UserService {
     public SiameseResult user(String id) {
         SiameseUserEntity item = userMapper.selectByPrimaryKey(id);
         if (ObjectUtils.isEmpty(item)) {
-            throw new SiameseException(ResponseEnum.USER_INFORMATION_NOT_FOUND);
+            throw new SiameseException(ResponseEnum.RECORD_NOT_FOUND);
         }
-        return new SiameseResult<>(ResponseEnum.QUERY_SUCCESS, item);
+        return new SiameseResult<>(ResponseEnum.REQUEST_ACCEPTED, item);
     }
 }

@@ -3,12 +3,10 @@ package com.joe2shi.siamese.item.controller;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.item.service.ArticleService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("article")
@@ -26,5 +24,10 @@ public class ArticleController {
         @RequestParam(value = "desc", defaultValue = "false") Boolean desc
     ) {
         return ResponseEntity.ok(articleService.selectBrandByPage(key, page, rows, sortBy, desc));
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<SiameseResult> deleteByIds(@RequestParam("ids") List<String> ids) {
+        return ResponseEntity.ok(articleService.deleteByIds(ids));
     }
 }
