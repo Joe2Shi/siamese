@@ -1,11 +1,20 @@
 package com.joe2shi.siamese.item.service;
 
 import com.joe2shi.siamese.common.vo.SiameseResult;
+import com.joe2shi.siamese.item.bo.InsertArticleBo;
 
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
 public interface ArticleService {
+    /**
+     * New article
+     *
+     * @param insertArticle Article information
+     * @return
+     */
+    SiameseResult insertArticle(InsertArticleBo insertArticle);
+
     /**
      * Paging filter query articles
      *
@@ -17,7 +26,7 @@ public interface ArticleService {
      *               false: ascending
      * @return
      */
-    SiameseResult selectBrandByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc);
+    SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc);
 
     /**
      * Delete articles in batches according to ids
@@ -25,5 +34,5 @@ public interface ArticleService {
      * @param ids Articles ids
      * @return
      */
-    SiameseResult deleteByIds(List<String> ids);
+    SiameseResult deleteArticleByIds(List<String> ids);
 }

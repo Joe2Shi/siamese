@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 @SuppressWarnings("rawtypes")
 public interface UserServiceProxy {
     @PostMapping("validation")
-    SiameseResult validation(@RequestBody CheckBo checkBo);
+    SiameseResult validation(@RequestBody CheckBo check);
 
     @PostMapping("register")
-    SiameseResult register(@RequestBody RegisterBo registerBo);
+    SiameseResult register(@RequestBody RegisterBo register);
 
     @PostMapping("accredit")
-    SiameseResult accredit(@RequestBody AccreditBo accreditBo);
+    SiameseResult accredit(@RequestBody AccreditBo accredit);
 
     @GetMapping("user")
     SiameseResult user();

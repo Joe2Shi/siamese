@@ -1,13 +1,13 @@
 package com.joe2shi.siamese.user.service.impl;
 
 import com.alibaba.nacos.common.utils.Md5Utils;
+import com.joe2shi.siamese.common.utils.IdUtils;
 import com.joe2shi.siamese.user.bo.CheckBo;
 import com.joe2shi.siamese.user.bo.RegisterBo;
 import com.joe2shi.siamese.user.bo.AccreditBo;
 import com.joe2shi.siamese.user.entity.SiameseUserEntity;
 import com.joe2shi.siamese.user.mapper.UserMapper;
 import com.joe2shi.siamese.user.service.UserService;
-import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.common.constant.RegularConstant;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
@@ -78,11 +78,10 @@ public class UserServiceImpl implements UserService {
         }
         try {
             // Insert user information
-            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.CHARACTER_HYPHEN, SystemConstant.CHARACTER_NULL);
             // Encryption password
             String md5Password = Md5Utils.getMD5(password.getBytes());
             SiameseUserEntity siameseUserEntity = new SiameseUserEntity();
-            siameseUserEntity.setId(id);
+            siameseUserEntity.setId(IdUtils.generateId());
             siameseUserEntity.setUsername(username);
             siameseUserEntity.setPassword(md5Password);
             siameseUserEntity.setPhoneNumber(phoneNumber);
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService {
             }
             return new SiameseResult(ResponseEnum.REGISTER_SUCCESS);
         } catch (Exception e) {
-            log.error(LoggerConstant.REGISTER_FAILED + e.getMessage());
+            log.error(ResponseEnum.REGISTER_FAILED.getMessage() + SystemConstant.CHARACTER_COLON + SystemConstant.CHARACTER_SPACE + e.getMessage());
             throw new SiameseException(ResponseEnum.REGISTER_FAILED);
         }
     }

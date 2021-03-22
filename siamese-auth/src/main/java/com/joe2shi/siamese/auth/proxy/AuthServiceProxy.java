@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 @SuppressWarnings("rawtypes")
 public interface AuthServiceProxy {
     @PostMapping("accredit")
-    SiameseResult accredit(@RequestBody AccreditBo accreditBo);
+    SiameseResult accredit(@RequestBody AccreditBo accredit);
 }

@@ -1,7 +1,6 @@
 package com.joe2shi.siamese.auth.config;
 
 import com.joe2shi.siamese.auth.utils.RsaUtils;
-import com.joe2shi.siamese.common.constant.LoggerConstant;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -32,7 +31,6 @@ public class JwtProperties {
             this.publicKey = RsaUtils.getPublicKey(publicKeyPath);
             this.privateKey = RsaUtils.getPrivateKey(privateKeyPath);
         } catch (Exception e) {
-            log.error(LoggerConstant.INIT_KEY_FAILED + e.getMessage());
             throw new RuntimeException(e);
         }
     }

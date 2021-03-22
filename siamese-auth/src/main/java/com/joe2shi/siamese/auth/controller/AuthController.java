@@ -15,7 +15,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("accredit")
-    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditBo accreditBo) {
-        return ResponseEntity.ok(authService.accredit(accreditBo));
+    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditBo accredit) {
+        return ResponseEntity.ok(authService.accredit(accredit));
     }
 }

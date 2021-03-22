@@ -5,8 +5,10 @@ import com.github.pagehelper.PageHelper;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
+import com.joe2shi.siamese.common.utils.IdUtils;
 import com.joe2shi.siamese.common.vo.SiamesePageResult;
 import com.joe2shi.siamese.common.vo.SiameseResult;
+import com.joe2shi.siamese.item.bo.InsertArticleBo;
 import com.joe2shi.siamese.item.entity.SiameseArticleEntity;
 import com.joe2shi.siamese.item.mapper.ArticleMapper;
 import com.joe2shi.siamese.item.service.ArticleService;
@@ -18,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -27,7 +30,35 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Override
-    public SiameseResult selectBrandByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc) {
+    public SiameseResult insertArticle(InsertArticleBo insertArticle) {
+        String title = insertArticle.getTitle();
+        String subtitle = insertArticle.getSubtitle();
+        String url = insertArticle.getUrl();
+        if (StringUtils.isBlank(title)) {
+            throw new SiameseException(ResponseEnum.TITLE_IS_REQUIRED);
+        }
+        if (StringUtils.isBlank(subtitle)) {
+            throw new SiameseException(ResponseEnum.SUBTITLE_IS_REQUIRED);
+        }
+        if (StringUtils.isBlank(url)) {
+            throw new SiameseException(ResponseEnum.URL_IS_REQUIRED);
+        }
+        SiameseArticleEntity siameseArticleEntity = new SiameseArticleEntity();
+        siameseArticleEntity.setId(IdUtils.generateId());
+        siameseArticleEntity.setTitle(title);
+        siameseArticleEntity.setSubtitle(subtitle);
+        siameseArticleEntity.setUrl(url);
+        siameseArticleEntity.setCreateTime(System.currentTimeMillis());
+        siameseArticleEntity.setUpdateTime(siameseArticleEntity.getCreateTime());
+        int result = articleMapper.insert(siameseArticleEntity);
+        if (result < SystemConstant.NUMBER_ONE) {
+            throw new SiameseException(ResponseEnum.ADD_ARTICLE_FAILED);
+        }
+        return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
+    }
+
+    @Override
+    public SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc) {
         PageHelper.startPage(page, rows);
         Example example = new Example(SiameseArticleEntity.class);
         if (!StringUtils.isBlank(key)) {
@@ -44,7 +75,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public SiameseResult deleteByIds(List<String> ids) {
+    public SiameseResult deleteArticleByIds(List<String> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             throw new SiameseException(ResponseEnum.IDS_IS_REQUIRED);
         }

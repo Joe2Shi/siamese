@@ -17,18 +17,18 @@ public class UserController {
     private UserServiceProxy userServiceProxy;
 
     @PostMapping("validation")
-    public ResponseEntity<SiameseResult> validation(@RequestBody CheckBo checkBo) {
-        return ResponseEntity.ok(userServiceProxy.validation(checkBo));
+    public ResponseEntity<SiameseResult> validation(@RequestBody CheckBo check) {
+        return ResponseEntity.ok(userServiceProxy.validation(check));
     }
 
     @PostMapping("register")
-    public ResponseEntity<SiameseResult> register(@RequestBody RegisterBo registerBo) {
-        return ResponseEntity.ok(userServiceProxy.register(registerBo));
+    public ResponseEntity<SiameseResult> register(@RequestBody RegisterBo register) {
+        return ResponseEntity.ok(userServiceProxy.register(register));
     }
 
     @PostMapping("accredit")
-    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditBo accreditBo) {
-        return ResponseEntity.ok(userServiceProxy.accredit(accreditBo));
+    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditBo accredit) {
+        return ResponseEntity.ok(userServiceProxy.accredit(accredit));
     }
 
     @GetMapping("user")

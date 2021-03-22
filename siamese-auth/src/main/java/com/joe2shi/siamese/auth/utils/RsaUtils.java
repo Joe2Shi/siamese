@@ -1,6 +1,5 @@
 package com.joe2shi.siamese.auth.utils;
 
-import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import lombok.extern.slf4j.Slf4j;
 
@@ -91,10 +90,7 @@ public class RsaUtils {
     private static void writeFile(String destPath, byte[] bytes) throws IOException {
         File dest = new File(destPath);
         if (!dest.exists()) {
-            boolean result = dest.createNewFile();
-            if (!result) {
-                log.error(LoggerConstant.CREATE_KEY_FILE_FAILED);
-            }
+            dest.createNewFile();
         }
         Files.write(dest.toPath(), bytes);
     }

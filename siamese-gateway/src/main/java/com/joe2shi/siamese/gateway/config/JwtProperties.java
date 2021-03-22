@@ -1,6 +1,5 @@
 package com.joe2shi.siamese.gateway.config;
 
-import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.gateway.utils.RsaUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,6 @@ public class JwtProperties {
         try {
             this.publicKey = RsaUtils.getPublicKey(publicKeyPath);
         } catch (Exception e) {
-            log.error(LoggerConstant.INIT_KEY_FAILED + e.getMessage());
             throw new RuntimeException(e);
         }
     }

@@ -2,8 +2,8 @@ package com.joe2shi.siamese.file.service.impl;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.common.constant.SystemConstant;
+import com.joe2shi.siamese.common.utils.IdUtils;
 import com.joe2shi.siamese.file.config.FileProperties;
 import com.joe2shi.siamese.file.entity.SiameseFileEntity;
 import com.joe2shi.siamese.file.mapper.FileMapper;
@@ -57,14 +57,13 @@ public class ImageServiceImpl implements ImageService {
             StorePath storePath = fastFileStorageClient.uploadFile(SystemConstant.STRING_IMAGE, file.getInputStream(), file.getSize(), extension);
             String address = fileProperties.getBaseAddress() + storePath.getFullPath();
             // insert database
-            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.CHARACTER_HYPHEN, SystemConstant.CHARACTER_NULL);
             SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
-            siameseFileEntity.setId(id);
-            siameseFileEntity.setGroup(SystemConstant.CHARACTER_I);
+            siameseFileEntity.setId(IdUtils.generateId());
+            siameseFileEntity.setGroup(SystemConstant.UPPERCASE_LETTER_I);
             siameseFileEntity.setAddress(address);
             siameseFileEntity.setCreateTime(System.currentTimeMillis());
             int result = fileMapper.insert(siameseFileEntity);
-            if (result != 1) {
+            if (result < SystemConstant.NUMBER_ONE) {
                 // remove from file server
                 fastFileStorageClient.deleteFile(storePath.getFullPath());
                 throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
@@ -72,7 +71,7 @@ public class ImageServiceImpl implements ImageService {
             // return result
             return new SiameseResult<>(ResponseEnum.OPERATING_SUCCESS, address);
         } catch (IOException e) {
-            log.error(LoggerConstant.UPLOAD_IMAGE_FAILED + e.getMessage());
+            log.error(ResponseEnum.UPLOAD_FAILED.getMessage() + SystemConstant.CHARACTER_COLON + SystemConstant.CHARACTER_SPACE + e.getMessage());
             throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
         }
     }
@@ -82,7 +81,7 @@ public class ImageServiceImpl implements ImageService {
     public SiameseResult deleteImage(String id) {
         // query whether the record exists
         SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
-        if (ObjectUtils.isEmpty(siameseFileEntity) || !SystemConstant.CHARACTER_I.equals(siameseFileEntity.getGroup())) {
+        if (ObjectUtils.isEmpty(siameseFileEntity) || !SystemConstant.UPPERCASE_LETTER_I.equals(siameseFileEntity.getGroup())) {
             throw new SiameseException(ResponseEnum.RECORD_NOT_FOUND);
         }
         // delete records in the database
@@ -102,7 +101,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public SiameseResult<List<SiameseFileEntity>> queryImages() {
         SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
-        siameseFileEntity.setGroup(SystemConstant.CHARACTER_I);
+        siameseFileEntity.setGroup(SystemConstant.UPPERCASE_LETTER_I);
         List<SiameseFileEntity> items = fileMapper.select(siameseFileEntity);
         if (!CollectionUtils.isEmpty(items))
             return new SiameseResult<>(ResponseEnum.REQUEST_ACCEPTED, items);

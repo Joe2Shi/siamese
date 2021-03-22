@@ -6,7 +6,6 @@ import com.joe2shi.siamese.auth.service.AuthService;
 import com.joe2shi.siamese.auth.proxy.AuthServiceProxy;
 import com.joe2shi.siamese.auth.utils.JwtUtils;
 import com.joe2shi.siamese.auth.utils.UserInfo;
-import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
@@ -34,10 +33,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
 
-    public SiameseResult accredit(AccreditBo accreditBo) {
+    public SiameseResult accredit(AccreditBo accredit) {
         try {
             // Auth user
-            SiameseResult result = authServiceProxy.accredit(accreditBo);
+            SiameseResult result = authServiceProxy.accredit(accredit);
             if (result.getCode() != SystemConstant.SUCCESS_CODE) {
                 return result;
             }
@@ -55,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
                 return new SiameseResult<>(ResponseEnum.SIGN_IN_SUCCESS, token);
             }
         } catch (Exception e) {
-            log.error(LoggerConstant.GENERATE_TOKEN_FAILED + e.getMessage());
+            log.error(ResponseEnum.GENERATE_TOKEN_FAILED.getMessage() + SystemConstant.CHARACTER_COLON + SystemConstant.CHARACTER_SPACE + e.getMessage());
             throw new SiameseException(ResponseEnum.GENERATE_TOKEN_FAILED);
         }
     }

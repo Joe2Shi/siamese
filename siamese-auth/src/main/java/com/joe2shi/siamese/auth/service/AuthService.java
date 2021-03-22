@@ -8,8 +8,8 @@ public interface AuthService {
     /**
      * Generate token
      *
-     * @param accreditBo
+     * @param accredit
      * @return
      */
-    SiameseResult accredit(AccreditBo accreditBo);
+    SiameseResult accredit(AccreditBo accredit);
 }

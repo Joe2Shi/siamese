@@ -2,10 +2,10 @@ package com.joe2shi.siamese.file.service.impl;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.joe2shi.siamese.common.constant.LoggerConstant;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
+import com.joe2shi.siamese.common.utils.IdUtils;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.file.config.FileProperties;
 import com.joe2shi.siamese.file.entity.SiameseFileEntity;
@@ -48,10 +48,9 @@ public class MarkdownServiceImpl implements MarkdownService {
             StorePath storePath = fastFileStorageClient.uploadFile(SystemConstant.STRING_MARKDOWN, file.getInputStream(), file.getSize(), extension);
             String address = fileProperties.getBaseAddress() + storePath.getFullPath();
             // insert database
-            String id = UUID.randomUUID().toString().replaceAll(SystemConstant.CHARACTER_HYPHEN, SystemConstant.CHARACTER_NULL);
             SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
-            siameseFileEntity.setId(id);
-            siameseFileEntity.setGroup(SystemConstant.CHARACTER_M);
+            siameseFileEntity.setId(IdUtils.generateId());
+            siameseFileEntity.setGroup(SystemConstant.UPPERCASE_LETTER_M);
             siameseFileEntity.setAddress(address);
             siameseFileEntity.setCreateTime(System.currentTimeMillis());
             int result = fileMapper.insert(siameseFileEntity);
@@ -63,7 +62,7 @@ public class MarkdownServiceImpl implements MarkdownService {
             // return result
             return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
         } catch (IOException e) {
-            log.error(LoggerConstant.UPLOAD_MARKDOWN_FAILED + e.getMessage());
+            log.error(ResponseEnum.UPLOAD_FAILED.getMessage() + e.getMessage());
             throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
         }
     }
@@ -73,7 +72,7 @@ public class MarkdownServiceImpl implements MarkdownService {
     public SiameseResult deleteMarkdown(String id) {
         // query whether the record exists
         SiameseFileEntity siameseFileEntity = fileMapper.selectByPrimaryKey(id);
-        if (ObjectUtils.isEmpty(siameseFileEntity) || !SystemConstant.CHARACTER_M.equals(siameseFileEntity.getGroup())) {
+        if (ObjectUtils.isEmpty(siameseFileEntity) || !SystemConstant.UPPERCASE_LETTER_M.equals(siameseFileEntity.getGroup())) {
             throw new SiameseException(ResponseEnum.RECORD_NOT_FOUND);
         }
         // delete records in the database
@@ -93,7 +92,7 @@ public class MarkdownServiceImpl implements MarkdownService {
     @Override
     public SiameseResult queryMarkdowns() {
         SiameseFileEntity siameseFileEntity = new SiameseFileEntity();
-        siameseFileEntity.setGroup(SystemConstant.CHARACTER_M);
+        siameseFileEntity.setGroup(SystemConstant.UPPERCASE_LETTER_M);
         List<SiameseFileEntity> items = fileMapper.select(siameseFileEntity);
         if (!CollectionUtils.isEmpty(items))
             return new SiameseResult<>(ResponseEnum.REQUEST_ACCEPTED, items);

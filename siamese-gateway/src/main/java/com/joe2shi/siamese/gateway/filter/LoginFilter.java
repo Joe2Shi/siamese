@@ -1,13 +1,18 @@
 package com.joe2shi.siamese.gateway.filter;
 
-import com.joe2shi.siamese.common.constant.LoggerConstant;
+import com.alibaba.nacos.client.utils.JSONUtils;
 import com.joe2shi.siamese.common.constant.SystemConstant;
+import com.joe2shi.siamese.common.enums.HttpHeaderEnum;
+import com.joe2shi.siamese.common.enums.ResponseEnum;
+import com.joe2shi.siamese.common.exception.SiameseException;
+import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.gateway.config.FilterProperties;
 import com.joe2shi.siamese.gateway.config.JwtProperties;
 import com.joe2shi.siamese.gateway.utils.JwtUtils;
 import com.joe2shi.siamese.gateway.utils.UserInfo;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @EnableConfigurationProperties(value = {JwtProperties.class, FilterProperties.class})
 @Slf4j
+@SuppressWarnings("rawtypes")
 public class LoginFilter extends ZuulFilter {
     @Resource
     private FilterProperties filterProperties;
@@ -50,6 +56,7 @@ public class LoginFilter extends ZuulFilter {
         return !isAllowPath(requestURI);
     }
 
+    @SneakyThrows
     @Override
     public Object run() {
         RequestContext context = RequestContext.getCurrentContext();
@@ -64,12 +71,14 @@ public class LoginFilter extends ZuulFilter {
                 context.addZuulRequestHeader(SystemConstant.STRING_ID, userInfo.getId());
             } else {
                 // token invalid or tampered
-                throw new RuntimeException(LoggerConstant.INVALID_TOKEN);
+                throw new SiameseException(ResponseEnum.INVALID_TOKEN);
             }
         } catch (Exception e) {
-            log.warn(e.getMessage());
+            log.error(e.getMessage());
             context.setSendZuulResponse(Boolean.FALSE);
-            context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+            context.setResponseStatusCode(HttpStatus.OK.value());
+            context.addZuulResponseHeader(HttpHeaderEnum.CONTENT_TYPE_JSON.getName(), HttpHeaderEnum.CONTENT_TYPE_JSON.getValue());
+            context.setResponseBody(JSONUtils.serializeObject(new SiameseResult(ResponseEnum.UNAUTHORIZED)));
         }
         return null;
     }

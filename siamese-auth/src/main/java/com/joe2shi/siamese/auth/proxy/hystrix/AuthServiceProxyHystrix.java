@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("rawtypes")
 public class AuthServiceProxyHystrix implements AuthServiceProxy {
     @Override
-    public SiameseResult accredit(AccreditBo accreditBo) {
+    public SiameseResult accredit(AccreditBo accredit) {
         return new SiameseResult(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 }

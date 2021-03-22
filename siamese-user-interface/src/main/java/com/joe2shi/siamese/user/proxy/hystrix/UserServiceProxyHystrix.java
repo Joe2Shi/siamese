@@ -12,17 +12,17 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("rawtypes")
 public class UserServiceProxyHystrix implements UserServiceProxy {
     @Override
-    public SiameseResult validation(CheckBo checkBo) {
+    public SiameseResult validation(CheckBo check) {
         return new SiameseResult(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 
     @Override
-    public SiameseResult register(RegisterBo registerBo) {
+    public SiameseResult register(RegisterBo register) {
         return new SiameseResult(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 
     @Override
-    public SiameseResult accredit(AccreditBo accreditBo) {
+    public SiameseResult accredit(AccreditBo accredit) {
         return new SiameseResult(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 
