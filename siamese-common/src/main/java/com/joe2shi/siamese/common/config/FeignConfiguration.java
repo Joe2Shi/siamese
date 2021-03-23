@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.user.config;
+package com.joe2shi.siamese.common.config;
 
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import feign.RequestInterceptor;

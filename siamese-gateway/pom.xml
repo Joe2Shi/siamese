@@ -43,10 +43,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.joe2shi.siamese</groupId>
             <artifactId>siamese-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>

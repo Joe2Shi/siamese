@@ -1,7 +1,7 @@
 package com.joe2shi.siamese.item.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.page.PageMethod;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
@@ -20,7 +20,6 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -59,7 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc) {
-        PageHelper.startPage(page, rows);
+        PageMethod.startPage(page, rows);
         Example example = new Example(SiameseArticleEntity.class);
         if (!StringUtils.isBlank(key)) {
             example.createCriteria()
@@ -67,7 +66,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .orLike(SystemConstant.STRING_TITLE, SystemConstant.CHARACTER_PERCENT_SIGN + key + SystemConstant.CHARACTER_PERCENT_SIGN);
         }
         if (!StringUtils.isBlank(sortBy)) {
-            String sort = sortBy + (desc ? SystemConstant.CHARACTER_SPACE + SystemConstant.STRING_ASC : SystemConstant.CHARACTER_SPACE + SystemConstant.STRING_DESC);
+            String sort = sortBy + (Boolean.TRUE.equals(desc) ? SystemConstant.CHARACTER_SPACE + SystemConstant.STRING_ASC : SystemConstant.CHARACTER_SPACE + SystemConstant.STRING_DESC);
             example.setOrderByClause(sort);
         }
         Page<SiameseArticleEntity> pageInfo = (Page<SiameseArticleEntity>) articleMapper.selectByExample(example);

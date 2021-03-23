@@ -20,7 +20,6 @@ import org.springframework.util.ObjectUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.UUID;
 
 @Service
 @Slf4j

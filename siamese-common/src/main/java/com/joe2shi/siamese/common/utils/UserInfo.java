@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.auth.utils;
+package com.joe2shi.siamese.common.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

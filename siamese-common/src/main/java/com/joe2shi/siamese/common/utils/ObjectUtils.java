@@ -1,8 +1,11 @@
-package com.joe2shi.siamese.auth.utils;
+package com.joe2shi.siamese.common.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import com.joe2shi.siamese.common.constant.SystemConstant;
+import org.apache.commons.lang.StringUtils;
 
 public class ObjectUtils {
+    private ObjectUtils() {
+    }
 
     public static String toString(Object obj) {
         if (obj == null) {
@@ -16,7 +19,7 @@ public class ObjectUtils {
             return 0L;
         }
         if (obj instanceof Double || obj instanceof Float) {
-            return Long.valueOf(StringUtils.substringBefore(obj.toString(), "."));
+            return Long.valueOf(StringUtils.substringBefore(obj.toString(), SystemConstant.CHARACTER_DECIMAL_POINT));
         }
         if (obj instanceof Number) {
             return Long.valueOf(obj.toString());

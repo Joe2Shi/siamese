@@ -53,7 +53,7 @@ public enum ResponseEnum {
     UPLOAD_FAILED(50002, "Upload fail"),
     DELETE_FAILED(50003, "Delete fail"),
     GENERATE_TOKEN_FAILED(50004, "Generate token failed"),
-    ADD_ARTICLE_FAILED(50004, "Add article failed"),
+    ADD_ARTICLE_FAILED(50005, "Add article failed")
     ;
     private Integer code;
     private String message;

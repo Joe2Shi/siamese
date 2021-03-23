@@ -1,6 +1,9 @@
 package com.joe2shi.siamese.common.constant;
 
 public class SystemConstant {
+    private SystemConstant() {
+    }
+
     // Character
     public static final String CHARACTER_NULL = "";
     public static final String CHARACTER_DECIMAL_POINT = ".";
