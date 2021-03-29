@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.user;
+package com.joe2shi.siamese.txmanage;
 
 import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import org.springframework.boot.SpringApplication;
@@ -9,9 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableDistributedTransaction
-@ComponentScan({"com.joe2shi.siamese.user", "com.joe2shi.siamese.common"})
-public class SiameseUserServiceApplication {
+@ComponentScan({"com.joe2shi.siamese.txmanage", "com.joe2shi.siamese.common"})
+public class SiameseItemServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SiameseUserServiceApplication.class, args);
+        SpringApplication.run(SiameseItemServiceApplication.class, args);
     }
 }
