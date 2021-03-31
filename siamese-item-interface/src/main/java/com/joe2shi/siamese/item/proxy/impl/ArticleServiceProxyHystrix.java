@@ -1,10 +1,10 @@
-package com.joe2shi.siamese.txmanage.proxy.impl;
+package com.joe2shi.siamese.item.proxy.impl;
 
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.vo.SiameseResult;
-import com.joe2shi.siamese.txmanage.bo.InsertArticleBo;
-import com.joe2shi.siamese.txmanage.proxy.ArticleServiceProxy;
+import com.joe2shi.siamese.item.bo.InsertArticleBo;
+import com.joe2shi.siamese.item.proxy.ArticleServiceProxy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.txmanage.base;
+package com.joe2shi.siamese.item.base;
 
 import tk.mybatis.mapper.additional.idlist.DeleteByIdListMapper;
 import tk.mybatis.mapper.common.Mapper;

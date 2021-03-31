@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.txmanage.entity;
+package com.joe2shi.siamese.item.entity;
 
 import lombok.Data;
 

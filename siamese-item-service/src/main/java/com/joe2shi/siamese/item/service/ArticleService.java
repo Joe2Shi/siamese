@@ -1,7 +1,7 @@
-package com.joe2shi.siamese.txmanage.service;
+package com.joe2shi.siamese.item.service;
 
 import com.joe2shi.siamese.common.vo.SiameseResult;
-import com.joe2shi.siamese.txmanage.bo.InsertArticleBo;
+import com.joe2shi.siamese.item.bo.InsertArticleBo;
 
 import java.util.List;
 

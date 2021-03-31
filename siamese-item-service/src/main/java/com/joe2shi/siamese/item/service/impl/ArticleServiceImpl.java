@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.txmanage.service.impl;
+package com.joe2shi.siamese.item.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.page.PageMethod;
@@ -8,10 +8,10 @@ import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.utils.IdUtils;
 import com.joe2shi.siamese.common.vo.SiamesePageResult;
 import com.joe2shi.siamese.common.vo.SiameseResult;
-import com.joe2shi.siamese.txmanage.bo.InsertArticleBo;
-import com.joe2shi.siamese.txmanage.entity.SiameseArticleEntity;
-import com.joe2shi.siamese.txmanage.mapper.ArticleMapper;
-import com.joe2shi.siamese.txmanage.service.ArticleService;
+import com.joe2shi.siamese.item.bo.InsertArticleBo;
+import com.joe2shi.siamese.item.entity.SiameseArticleEntity;
+import com.joe2shi.siamese.item.mapper.ArticleMapper;
+import com.joe2shi.siamese.item.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

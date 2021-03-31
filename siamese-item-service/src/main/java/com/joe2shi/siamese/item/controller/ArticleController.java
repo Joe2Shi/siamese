@@ -1,9 +1,9 @@
-package com.joe2shi.siamese.txmanage.controller;
+package com.joe2shi.siamese.item.controller;
 
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.joe2shi.siamese.common.vo.SiameseResult;
-import com.joe2shi.siamese.txmanage.bo.InsertArticleBo;
-import com.joe2shi.siamese.txmanage.service.ArticleService;
+import com.joe2shi.siamese.item.bo.InsertArticleBo;
+import com.joe2shi.siamese.item.service.ArticleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

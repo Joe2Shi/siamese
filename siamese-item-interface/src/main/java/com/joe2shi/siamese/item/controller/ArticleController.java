@@ -1,13 +1,13 @@
-package com.joe2shi.siamese.txmanage.controller;
+package com.joe2shi.siamese.item.controller;
 
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.vo.SiameseResult;
-import com.joe2shi.siamese.txmanage.bo.InsertArticleBo;
-import com.joe2shi.siamese.txmanage.proxy.ArticleServiceProxy;
-import com.joe2shi.siamese.txmanage.proxy.UserServiceProxy;
+import com.joe2shi.siamese.item.bo.InsertArticleBo;
+import com.joe2shi.siamese.item.proxy.ArticleServiceProxy;
+import com.joe2shi.siamese.item.proxy.UserServiceProxy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

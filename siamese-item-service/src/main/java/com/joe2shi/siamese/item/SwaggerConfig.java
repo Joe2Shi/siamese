@@ -1,4 +1,4 @@
-package com.joe2shi.siamese.txmanage;
+package com.joe2shi.siamese.item;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +22,8 @@ public class SwaggerConfig {
         List<Parameter> parameters = new ArrayList<>();
         return new Docket(DocumentationType.SWAGGER_2)
             .globalOperationParameters(parameters)
-            .host("api.joe2shi.com/siamese-item-interface")
-            .groupName("siamese-item-interface")
+            .host("api.joe2shi.com/siamese-item-service")
+            .groupName("siamese-item-service")
             .useDefaultResponseMessages(Boolean.FALSE)
             .apiInfo(apiInfo())
             .select()
@@ -34,9 +34,10 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Siamese Item API")
+            .title("Siamese Item Service")
             .description("")
             .version("1.0")
             .build();
     }
 }
+
