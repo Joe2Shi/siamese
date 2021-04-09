@@ -26,7 +26,6 @@ public class SystemConstant {
     public static final String STRING_DESC = "DESC";
     public static final String STRING_ASC = "ASC";
     public static final String STRING_TITLE = "title";
-    public static final String STRING_ADDRESS = "address";
     public static final String STRING_TAG = "tag";
     // Number
     public static final int NUMBER_ZERO = 0;

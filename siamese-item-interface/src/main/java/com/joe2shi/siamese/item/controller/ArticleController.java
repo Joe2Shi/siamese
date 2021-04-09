@@ -2,6 +2,7 @@ package com.joe2shi.siamese.item.controller;
 
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.item.dto.InsertArticleDto;
+import com.joe2shi.siamese.item.dto.UpdateArticleDto;
 import com.joe2shi.siamese.item.proxy.ItemServiceProxy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,22 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<SiameseResult> insertArticle(InsertArticleDto insertArticle) {
-        return ResponseEntity.ok(itemServiceProxy.insertArticle(insertArticle.getTitle(), insertArticle.getSubtitle(), insertArticle.getFile()));
+        return ResponseEntity.ok(itemServiceProxy.insertArticle(
+            insertArticle.getTitle(),
+            insertArticle.getSubtitle(),
+            insertArticle.getFile()
+        ));
+    }
+
+    @PutMapping
+    public ResponseEntity<SiameseResult> updateArticle(UpdateArticleDto updateArticle) {
+        return ResponseEntity.ok(itemServiceProxy.updateArticle(
+            updateArticle.getId(),
+            updateArticle.getTitle(),
+            updateArticle.getSubtitle(),
+            updateArticle.getOldAddress(),
+            updateArticle.getFile()
+        ));
     }
 
     @GetMapping("page")

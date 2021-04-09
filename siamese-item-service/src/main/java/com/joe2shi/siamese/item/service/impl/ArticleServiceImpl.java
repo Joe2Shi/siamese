@@ -2,6 +2,7 @@ package com.joe2shi.siamese.item.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.page.PageMethod;
+import com.joe2shi.siamese.common.constant.Null;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
@@ -10,6 +11,7 @@ import com.joe2shi.siamese.common.vo.SiamesePageResult;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.item.dto.DeleteFilesDto;
 import com.joe2shi.siamese.item.dto.InsertArticleDto;
+import com.joe2shi.siamese.item.dto.UpdateArticleDto;
 import com.joe2shi.siamese.item.entity.SiameseArticleEntity;
 import com.joe2shi.siamese.item.mapper.ArticleMapper;
 import com.joe2shi.siamese.item.proxy.FileServiceProxy;
@@ -54,7 +56,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         // Upload markdown file
         result = fileServiceProxy.uploadFile(file, SystemConstant.STRING_MARKDOWN);
-        if (SystemConstant.SUCCESS_CODE == result.getCode()) {
+        if (!ObjectUtils.isEmpty(result) && SystemConstant.SUCCESS_CODE == result.getCode()) {
             // Save article information to database
             SiameseArticleEntity siameseArticleEntity = new SiameseArticleEntity();
             siameseArticleEntity.setId(IdUtils.generateId());
@@ -68,6 +70,49 @@ public class ArticleServiceImpl implements ArticleService {
                 throw new SiameseException(ResponseEnum.ADD_ARTICLE_FAILED);
             }
             result = new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
+        }
+        return result;
+    }
+
+    @Override
+    public SiameseResult updateArticle(UpdateArticleDto updateArticle) {
+        SiameseArticleEntity siameseArticleEntity = new SiameseArticleEntity();
+        SiameseResult result;
+        String id = updateArticle.getId();
+        String title = updateArticle.getTitle();
+        String subtitle = updateArticle.getSubtitle();
+        MultipartFile file = updateArticle.getFile();
+        String oldAddress = updateArticle.getOldAddress();
+        if (StringUtils.isBlank(id)) {
+            throw new SiameseException(ResponseEnum.ID_IS_REQUIRED);
+        }
+        if (!ObjectUtils.isEmpty(file) && file.getSize() > 0) {
+            if (StringUtils.isBlank(oldAddress)) {
+                throw new SiameseException(ResponseEnum.MARKDOWN_OLD_ADDRESSES_IS_REQUIRED);
+            }
+            // Delete original file
+            ArrayList<String> addresses = new ArrayList<>();
+            addresses.add(oldAddress);
+            deleteFile(addresses);
+            // Upload markdown file
+            result = fileServiceProxy.uploadFile(file, SystemConstant.STRING_MARKDOWN);
+            if (!ObjectUtils.isEmpty(result) && SystemConstant.SUCCESS_CODE == result.getCode()) {
+                // Save article information to database
+                siameseArticleEntity.setId(id);
+                siameseArticleEntity.setTitle(title);
+                siameseArticleEntity.setSubtitle(subtitle);
+                siameseArticleEntity.setAddress(String.valueOf(result.getData()));
+                siameseArticleEntity.setUpdateTime(System.currentTimeMillis());
+                result = updateArticle(siameseArticleEntity);
+            }
+        } else {
+            // Save article information to database
+            siameseArticleEntity.setId(id);
+            siameseArticleEntity.setTitle(title);
+            siameseArticleEntity.setSubtitle(subtitle);
+            siameseArticleEntity.setAddress(null);
+            siameseArticleEntity.setUpdateTime(System.currentTimeMillis());
+            result = updateArticle(siameseArticleEntity);
         }
         return result;
     }
@@ -91,24 +136,39 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public SiameseResult deleteArticleByIds(List<String> ids) {
-        SiameseResult result;
         if (CollectionUtils.isEmpty(ids)) {
             throw new SiameseException(ResponseEnum.IDS_IS_REQUIRED);
         }
         Example example = new Example(SiameseArticleEntity.class);
-        example.createCriteria().andIn(SystemConstant.STRING_ADDRESS, ids);
+        example.createCriteria().andIn(SystemConstant.STRING_ID, ids);
         List<SiameseArticleEntity> items = articleMapper.selectByExample(example);
         List<String> addresses = items.stream().map(SiameseArticleEntity::getAddress).collect(Collectors.toList());
+        deleteFile(addresses);
+        int delete = articleMapper.deleteByIdList(ids);
+        if (delete < SystemConstant.NUMBER_ONE) {
+            throw new SiameseException(ResponseEnum.DELETE_FAILED);
+        }
+        return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
+    }
+
+
+    private SiameseResult updateArticle(SiameseArticleEntity siameseArticleEntity) {
+        SiameseResult result;
+        int insert = articleMapper.updateByPrimaryKeySelective(siameseArticleEntity);
+        if (insert < SystemConstant.NUMBER_ONE) {
+            throw new SiameseException(ResponseEnum.ADD_ARTICLE_FAILED);
+        }
+        result = new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
+        return result;
+    }
+
+    private void deleteFile(List<String> addresses) {
+        SiameseResult result;
         DeleteFilesDto deleteFiles = new DeleteFilesDto();
         deleteFiles.setAddresses(addresses);
         result = fileServiceProxy.deleteFiles(deleteFiles);
         if (ObjectUtils.isEmpty(result) || SystemConstant.SUCCESS_CODE != result.getCode()) {
             throw new SiameseException(ResponseEnum.DELETE_FAILED);
         }
-        int delete = articleMapper.deleteByIdList(ids);
-        if (delete < SystemConstant.NUMBER_ONE) {
-            throw new SiameseException(ResponseEnum.DELETE_FAILED);
-        }
-        return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
     }
 }

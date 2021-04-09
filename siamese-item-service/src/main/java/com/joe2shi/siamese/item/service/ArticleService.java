@@ -2,6 +2,7 @@ package com.joe2shi.siamese.item.service;
 
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.item.dto.InsertArticleDto;
+import com.joe2shi.siamese.item.dto.UpdateArticleDto;
 
 import java.util.List;
 
@@ -10,10 +11,18 @@ public interface ArticleService {
     /**
      * New article
      *
-     * @param insertArticle Article information
+     * @param insertArticle New article information
      * @return
      */
     SiameseResult insertArticle(InsertArticleDto insertArticle);
+
+    /**
+     * Update article
+     *
+     * @param updateArticle Update article information
+     * @return
+     */
+    SiameseResult updateArticle(UpdateArticleDto updateArticle);
 
     /**
      * Paging filter query articles

@@ -18,6 +18,11 @@ public class ItemServiceProxyHystrix implements ItemServiceProxy {
     }
 
     @Override
+    public SiameseResult updateArticle(String id, String title, String subtitle, String oldAddress, MultipartFile file) {
+        throw new SiameseException(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
+    }
+
+    @Override
     public SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc) {
         throw new SiameseException(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }

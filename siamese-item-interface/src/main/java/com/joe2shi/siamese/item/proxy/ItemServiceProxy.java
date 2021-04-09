@@ -13,7 +13,20 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public interface ItemServiceProxy {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    SiameseResult insertArticle(@RequestParam("title") String title, @RequestParam("subtitle") String subtitle, @RequestPart("file") MultipartFile file);
+    SiameseResult insertArticle(
+        @RequestParam("title") String title,
+        @RequestParam("subtitle") String subtitle,
+        @RequestPart("file") MultipartFile file
+    );
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    SiameseResult updateArticle(
+        @RequestParam("id") String id,
+        @RequestParam("title") String title,
+        @RequestParam("subtitle") String subtitle,
+        @RequestParam("oldAddress") String oldAddress,
+        @RequestPart("file") MultipartFile file
+    );
 
     @GetMapping("page")
     SiameseResult selectArticleByPage(

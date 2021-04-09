@@ -39,6 +39,8 @@ public enum ResponseEnum {
     FILE_TYPE_IS_REQUIRED(40012, "File type is required"),
     INVALID_TOKEN(400013, "Invalid token"),
     ADDRESSES_IS_REQUIRED(400014, "File addresses is required"),
+    MARKDOWN_OLD_ADDRESSES_IS_REQUIRED(400015, "Markdown old addresses is required"),
+    ID_IS_REQUIRED(40016, "Id is required"),
     /**
      * 401
      */
