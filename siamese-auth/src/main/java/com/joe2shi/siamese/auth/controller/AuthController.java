@@ -1,6 +1,6 @@
 package com.joe2shi.siamese.auth.controller;
 
-import com.joe2shi.siamese.auth.bo.AccreditBo;
+import com.joe2shi.siamese.auth.dto.AccreditDto;
 import com.joe2shi.siamese.auth.service.AuthService;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("accredit")
-    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditBo accredit) {
+    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditDto accredit) {
         return ResponseEntity.ok(authService.accredit(accredit));
     }
 }

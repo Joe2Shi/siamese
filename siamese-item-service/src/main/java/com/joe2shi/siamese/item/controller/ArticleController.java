@@ -1,11 +1,9 @@
 package com.joe2shi.siamese.item.controller;
 
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.joe2shi.siamese.common.vo.SiameseResult;
-import com.joe2shi.siamese.item.bo.InsertArticleBo;
+import com.joe2shi.siamese.item.dto.InsertArticleDto;
 import com.joe2shi.siamese.item.service.ArticleService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,7 +17,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping
-    public ResponseEntity<SiameseResult> insertArticle(@RequestBody InsertArticleBo insertArticle) {
+    public ResponseEntity<SiameseResult> insertArticle(InsertArticleDto insertArticle) {
         return ResponseEntity.ok(articleService.insertArticle(insertArticle));
     }
 
@@ -37,16 +35,5 @@ public class ArticleController {
     @DeleteMapping()
     public ResponseEntity<SiameseResult> deleteArticleByIds(@RequestParam("ids") List<String> ids) {
         return ResponseEntity.ok(articleService.deleteArticleByIds(ids));
-    }
-
-    @GetMapping("tx-manage")
-    @LcnTransaction
-    @Transactional
-    public ResponseEntity<SiameseResult> txManage() {
-        InsertArticleBo insertArticle = new InsertArticleBo();
-        insertArticle.setTitle("Java");
-        insertArticle.setSubtitle("Java基础");
-        insertArticle.setUrl("http://www.joe2shi.com");
-        return ResponseEntity.ok(articleService.insertArticle(insertArticle));
     }
 }

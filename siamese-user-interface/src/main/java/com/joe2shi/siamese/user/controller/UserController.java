@@ -1,8 +1,8 @@
 package com.joe2shi.siamese.user.controller;
 
-import com.joe2shi.siamese.user.bo.CheckBo;
-import com.joe2shi.siamese.user.bo.RegisterBo;
-import com.joe2shi.siamese.user.bo.AccreditBo;
+import com.joe2shi.siamese.user.dto.CheckDto;
+import com.joe2shi.siamese.user.dto.RegisterDto;
+import com.joe2shi.siamese.user.dto.AccreditDto;
 import com.joe2shi.siamese.user.proxy.UserServiceProxy;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +17,17 @@ public class UserController {
     private UserServiceProxy userServiceProxy;
 
     @PostMapping("validation")
-    public ResponseEntity<SiameseResult> validation(@RequestBody CheckBo check) {
+    public ResponseEntity<SiameseResult> validation(@RequestBody CheckDto check) {
         return ResponseEntity.ok(userServiceProxy.validation(check));
     }
 
     @PostMapping("register")
-    public ResponseEntity<SiameseResult> register(@RequestBody RegisterBo register) {
+    public ResponseEntity<SiameseResult> register(@RequestBody RegisterDto register) {
         return ResponseEntity.ok(userServiceProxy.register(register));
     }
 
     @PostMapping("accredit")
-    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditBo accredit) {
+    public ResponseEntity<SiameseResult> accredit(@RequestBody AccreditDto accredit) {
         return ResponseEntity.ok(userServiceProxy.accredit(accredit));
     }
 

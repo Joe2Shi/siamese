@@ -1,9 +1,9 @@
 package com.joe2shi.siamese.auth.service.impl;
 
-import com.joe2shi.siamese.auth.bo.AccreditBo;
+import com.joe2shi.siamese.auth.dto.AccreditDto;
 import com.joe2shi.siamese.auth.config.JwtProperties;
 import com.joe2shi.siamese.auth.service.AuthService;
-import com.joe2shi.siamese.auth.proxy.AuthServiceProxy;
+import com.joe2shi.siamese.auth.proxy.UserServiceProxy;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;
@@ -27,16 +27,16 @@ public class AuthServiceImpl implements AuthService {
     @Resource
     private JwtProperties jwtProperties;
     @Resource
-    private AuthServiceProxy authServiceProxy;
+    private UserServiceProxy userServiceProxy;
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
 
-    public SiameseResult accredit(AccreditBo accredit) {
+    public SiameseResult accredit(AccreditDto accredit) {
         try {
             // Auth user
-            SiameseResult result = authServiceProxy.accredit(accredit);
+            SiameseResult result = userServiceProxy.accredit(accredit);
             if (result.getCode() != SystemConstant.SUCCESS_CODE) {
                 return result;
             }

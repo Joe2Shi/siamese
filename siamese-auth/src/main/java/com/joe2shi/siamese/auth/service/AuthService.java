@@ -1,6 +1,6 @@
 package com.joe2shi.siamese.auth.service;
 
-import com.joe2shi.siamese.auth.bo.AccreditBo;
+import com.joe2shi.siamese.auth.dto.AccreditDto;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 
 @SuppressWarnings("rawtypes")
@@ -11,5 +11,5 @@ public interface AuthService {
      * @param accredit
      * @return
      */
-    SiameseResult accredit(AccreditBo accredit);
+    SiameseResult accredit(AccreditDto accredit);
 }

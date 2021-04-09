@@ -12,8 +12,7 @@
         <module>siamese-common</module>
         <module>siamese-auth</module>
         <module>siamese-tx-manage</module>
-        <module>siamese-file-interface</module>
-        <module>siamese-file-service</module>
+        <module>siamese-file</module>
         <module>siamese-user-interface</module>
         <module>siamese-user-service</module>
         <module>siamese-item-interface</module>

@@ -1,9 +1,9 @@
 package com.joe2shi.siamese.user.proxy.hystrix;
 
 import com.joe2shi.siamese.common.exception.SiameseException;
-import com.joe2shi.siamese.user.bo.CheckBo;
-import com.joe2shi.siamese.user.bo.RegisterBo;
-import com.joe2shi.siamese.user.bo.AccreditBo;
+import com.joe2shi.siamese.user.dto.CheckDto;
+import com.joe2shi.siamese.user.dto.RegisterDto;
+import com.joe2shi.siamese.user.dto.AccreditDto;
 import com.joe2shi.siamese.user.proxy.UserServiceProxy;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.vo.SiameseResult;
@@ -13,17 +13,17 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings("rawtypes")
 public class UserServiceProxyHystrix implements UserServiceProxy {
     @Override
-    public SiameseResult validation(CheckBo check) {
+    public SiameseResult validation(CheckDto check) {
         throw new SiameseException(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 
     @Override
-    public SiameseResult register(RegisterBo register) {
+    public SiameseResult register(RegisterDto register) {
         throw new SiameseException(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 
     @Override
-    public SiameseResult accredit(AccreditBo accredit) {
+    public SiameseResult accredit(AccreditDto accredit) {
         throw new SiameseException(ResponseEnum.PLEASE_TRY_AGAIN_LATER);
     }
 

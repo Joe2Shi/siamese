@@ -12,7 +12,7 @@ public class SiameseArticleEntity {
     private String id;
     private String title;
     private String subtitle;
-    private String url;
+    private String address;
     private Long createTime;
     private Long updateTime;
 }

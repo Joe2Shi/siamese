@@ -35,8 +35,10 @@ public enum ResponseEnum {
     IDS_IS_REQUIRED(4009, "Ids is required"),
     TITLE_IS_REQUIRED(40010, "Title is required"),
     SUBTITLE_IS_REQUIRED(40011, "Subtitle is required"),
-    URL_IS_REQUIRED(40012, "Url is required"),
+    FILE_IS_REQUIRED(40012, "File is required"),
+    FILE_TYPE_IS_REQUIRED(40012, "File type is required"),
     INVALID_TOKEN(400013, "Invalid token"),
+    ADDRESSES_IS_REQUIRED(400014, "File addresses is required"),
     /**
      * 401
      */

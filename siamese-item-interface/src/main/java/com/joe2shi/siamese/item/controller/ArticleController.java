@@ -1,13 +1,8 @@
 package com.joe2shi.siamese.item.controller;
 
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
-import com.joe2shi.siamese.common.constant.SystemConstant;
-import com.joe2shi.siamese.common.enums.ResponseEnum;
-import com.joe2shi.siamese.common.exception.SiameseException;
 import com.joe2shi.siamese.common.vo.SiameseResult;
-import com.joe2shi.siamese.item.bo.InsertArticleBo;
-import com.joe2shi.siamese.item.proxy.ArticleServiceProxy;
-import com.joe2shi.siamese.item.proxy.UserServiceProxy;
+import com.joe2shi.siamese.item.dto.InsertArticleDto;
+import com.joe2shi.siamese.item.proxy.ItemServiceProxy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +14,11 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class ArticleController {
     @Resource
-    private ArticleServiceProxy articleServiceProxy;
-
-    @Resource
-    private UserServiceProxy userServiceProxy;
+    private ItemServiceProxy itemServiceProxy;
 
     @PostMapping
-    public ResponseEntity<SiameseResult> insertArticle(@RequestBody InsertArticleBo insertArticle) {
-        return ResponseEntity.ok(articleServiceProxy.insertArticle(insertArticle));
+    public ResponseEntity<SiameseResult> insertArticle(InsertArticleDto insertArticle) {
+        return ResponseEntity.ok(itemServiceProxy.insertArticle(insertArticle.getTitle(), insertArticle.getSubtitle(), insertArticle.getFile()));
     }
 
     @GetMapping("page")
@@ -37,25 +29,11 @@ public class ArticleController {
         @RequestParam(value = "sortBy", required = false) String sortBy,
         @RequestParam(value = "desc", defaultValue = "false") Boolean desc
     ) {
-        return ResponseEntity.ok(articleServiceProxy.selectArticleByPage(key, page, rows, sortBy, desc));
+        return ResponseEntity.ok(itemServiceProxy.selectArticleByPage(key, page, rows, sortBy, desc));
     }
 
     @DeleteMapping
     public ResponseEntity<SiameseResult> deleteArticleByIds(@RequestParam("ids") List<String> ids) {
-        return ResponseEntity.ok(articleServiceProxy.deleteArticleByIds(ids));
-    }
-
-    @GetMapping("tx-manage")
-    @LcnTransaction
-    public ResponseEntity<SiameseResult> txManage() {
-        SiameseResult articleResult = articleServiceProxy.txManage();
-        if (SystemConstant.SUCCESS_CODE != articleResult.getCode()) {
-            throw new SiameseException(ResponseEnum.ADD_ARTICLE_FAILED);
-        }
-        SiameseResult userResult = userServiceProxy.txManage();
-        if (SystemConstant.SUCCESS_CODE != userResult.getCode()) {
-            throw new SiameseException(ResponseEnum.ADD_ARTICLE_FAILED);
-        }
-        return ResponseEntity.ok(new SiameseResult(ResponseEnum.OPERATING_SUCCESS));
+        return ResponseEntity.ok(itemServiceProxy.deleteArticleByIds(ids));
     }
 }

@@ -2,9 +2,9 @@ package com.joe2shi.siamese.user.service.impl;
 
 import com.alibaba.nacos.common.utils.Md5Utils;
 import com.joe2shi.siamese.common.utils.IdUtils;
-import com.joe2shi.siamese.user.bo.CheckBo;
-import com.joe2shi.siamese.user.bo.RegisterBo;
-import com.joe2shi.siamese.user.bo.AccreditBo;
+import com.joe2shi.siamese.user.dto.CheckDto;
+import com.joe2shi.siamese.user.dto.RegisterDto;
+import com.joe2shi.siamese.user.dto.AccreditDto;
 import com.joe2shi.siamese.user.entity.SiameseUserEntity;
 import com.joe2shi.siamese.user.mapper.UserMapper;
 import com.joe2shi.siamese.user.service.UserService;
@@ -29,14 +29,14 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public SiameseResult validation(CheckBo checkBo) {
+    public SiameseResult validation(CheckDto check) {
         SiameseUserEntity siameseUserEntity = new SiameseUserEntity();
-        switch (checkBo.getType()) {
+        switch (check.getType()) {
             case SystemConstant.NUMBER_ONE:
-                siameseUserEntity.setUsername(checkBo.getData().trim());
+                siameseUserEntity.setUsername(check.getData().trim());
                 break;
             case SystemConstant.NUMBER_TWO:
-                siameseUserEntity.setPhoneNumber(checkBo.getData().trim());
+                siameseUserEntity.setPhoneNumber(check.getData().trim());
                 break;
             default:
                 throw new SiameseException(ResponseEnum.INVALID_USER_DATA_TYPE);
@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SiameseResult register(RegisterBo registerBo) {
-        String username = registerBo.getUsername().trim();
-        String password = registerBo.getPassword().trim();
-        String phoneNumber = registerBo.getPhoneNumber().trim();
+    public SiameseResult register(RegisterDto register) {
+        String username = register.getUsername().trim();
+        String password = register.getPassword().trim();
+        String phoneNumber = register.getPhoneNumber().trim();
         // Check user information
         if (!username.matches(RegularConstant.CHECK_USERNAME)) {
             throw new SiameseException(ResponseEnum.INVALID_USERNAME);
@@ -97,9 +97,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SiameseResult accredit(AccreditBo accreditBo) {
-        String username = accreditBo.getUsername().trim();
-        String password = accreditBo.getPassword().trim();
+    public SiameseResult accredit(AccreditDto accredit) {
+        String username = accredit.getUsername().trim();
+        String password = accredit.getPassword().trim();
         if (StringUtils.isBlank(username)) {
             throw new SiameseException(ResponseEnum.USERNAME_IS_REQUIRED);
         }
