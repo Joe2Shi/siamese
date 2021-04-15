@@ -41,6 +41,7 @@ public enum ResponseEnum {
     ADDRESSES_IS_REQUIRED(400014, "File addresses is required"),
     MARKDOWN_OLD_ADDRESSES_IS_REQUIRED(400015, "Markdown old addresses is required"),
     ID_IS_REQUIRED(40016, "Id is required"),
+    ADDRESS_IS_REQUIRED(40017, "Address is required"),
     /**
      * 401
      */
@@ -57,7 +58,8 @@ public enum ResponseEnum {
     UPLOAD_FAILED(50002, "Upload fail"),
     DELETE_FAILED(50003, "Delete fail"),
     GENERATE_TOKEN_FAILED(50004, "Generate token failed"),
-    ADD_ARTICLE_FAILED(50005, "Add article failed")
+    ADD_ARTICLE_FAILED(50005, "Add article failed"),
+    READ_FILE_FAILED(50006, "Read file failed")
     ;
     private Integer code;
     private String message;

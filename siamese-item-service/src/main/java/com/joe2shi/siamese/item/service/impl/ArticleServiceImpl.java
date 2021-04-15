@@ -2,7 +2,6 @@ package com.joe2shi.siamese.item.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.page.PageMethod;
-import com.joe2shi.siamese.common.constant.Null;
 import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.enums.ResponseEnum;
 import com.joe2shi.siamese.common.exception.SiameseException;

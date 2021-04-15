@@ -32,7 +32,6 @@ public class AuthServiceImpl implements AuthService {
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
-
     public SiameseResult accredit(AccreditDto accredit) {
         try {
             // Auth user
