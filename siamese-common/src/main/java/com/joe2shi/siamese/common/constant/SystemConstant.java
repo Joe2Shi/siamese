@@ -27,6 +27,10 @@ public class SystemConstant {
     public static final String STRING_ASC = "ASC";
     public static final String STRING_TITLE = "title";
     public static final String STRING_TAG = "tag";
+    // Time format
+    public static final String PATTERN_DATE = "yyyy-MM-dd";
+    public static final String PATTERN_TIME = "HH:mm:ss";
+    public static final String PATTERN_DATETIME = "yyyy-MM-dd HH:mm:ss";
     // Number
     public static final int NUMBER_ZERO = 0;
     public static final int NUMBER_ONE = 1;
