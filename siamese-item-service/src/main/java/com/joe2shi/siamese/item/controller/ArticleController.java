@@ -1,5 +1,6 @@
 package com.joe2shi.siamese.item.controller;
 
+import com.joe2shi.siamese.common.constant.SystemConstant;
 import com.joe2shi.siamese.common.vo.SiameseResult;
 import com.joe2shi.siamese.item.dto.InsertArticleDto;
 import com.joe2shi.siamese.item.dto.UpdateArticleDto;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -18,8 +20,9 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping
-    public ResponseEntity<SiameseResult> insertArticle(InsertArticleDto insertArticle) {
-        return ResponseEntity.ok(articleService.insertArticle(insertArticle));
+    public ResponseEntity<SiameseResult> insertArticle(InsertArticleDto insertArticle, HttpServletRequest request) {
+        String userId = request.getHeader(SystemConstant.STRING_ID);
+        return ResponseEntity.ok(articleService.insertArticle(insertArticle, userId));
     }
 
     @PutMapping
@@ -33,9 +36,11 @@ public class ArticleController {
         @RequestParam(value = "page", defaultValue = "1") Integer page,
         @RequestParam(value = "rows", defaultValue = "10") Integer rows,
         @RequestParam(value = "sortBy", required = false) String sortBy,
-        @RequestParam(value = "desc", defaultValue = "false") Boolean desc
+        @RequestParam(value = "desc", defaultValue = "false") Boolean desc,
+        HttpServletRequest request
     ) {
-        return ResponseEntity.ok(articleService.selectArticleByPage(key, page, rows, sortBy, desc));
+        String userId = request.getHeader(SystemConstant.STRING_ID);
+        return ResponseEntity.ok(articleService.selectArticleByPage(key, page, rows, sortBy, desc, userId));
     }
 
     @DeleteMapping()

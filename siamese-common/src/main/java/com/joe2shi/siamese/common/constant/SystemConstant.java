@@ -26,6 +26,8 @@ public class SystemConstant {
     public static final String STRING_DESC = "DESC";
     public static final String STRING_ASC = "ASC";
     public static final String STRING_TITLE = "title";
+    public static final String STRING_SWAGGER_JSON = "swagger.json";
+    public static final String STRING_USER_ID = "userId";
     public static final String STRING_TAG = "tag";
     // Time format
     public static final String PATTERN_DATE = "yyyy-MM-dd";

@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 public class SiameseArticleEntity {
     @Id
     private String id;
+    private String userId;
     private String title;
     private String subtitle;
     private String address;

@@ -39,7 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
     private FileServiceProxy fileServiceProxy;
 
     @Override
-    public SiameseResult insertArticle(InsertArticleDto insertArticle) {
+    public SiameseResult insertArticle(InsertArticleDto insertArticle, String userId) {
         SiameseResult result;
         String title = insertArticle.getTitle();
         String subtitle = insertArticle.getSubtitle();
@@ -59,6 +59,7 @@ public class ArticleServiceImpl implements ArticleService {
             // Save article information to database
             SiameseArticleEntity siameseArticleEntity = new SiameseArticleEntity();
             siameseArticleEntity.setId(IdUtils.generateId());
+            siameseArticleEntity.setUserId(userId);
             siameseArticleEntity.setTitle(title);
             siameseArticleEntity.setSubtitle(subtitle);
             siameseArticleEntity.setAddress(String.valueOf(result.getData()));
@@ -89,10 +90,6 @@ public class ArticleServiceImpl implements ArticleService {
             if (StringUtils.isBlank(oldAddress)) {
                 throw new SiameseException(ResponseEnum.MARKDOWN_OLD_ADDRESSES_IS_REQUIRED);
             }
-            // Delete original file
-            ArrayList<String> addresses = new ArrayList<>();
-            addresses.add(oldAddress);
-            deleteFile(addresses);
             // Upload markdown file
             result = fileServiceProxy.uploadFile(file, SystemConstant.STRING_MARKDOWN);
             if (!ObjectUtils.isEmpty(result) && SystemConstant.SUCCESS_CODE == result.getCode()) {
@@ -104,6 +101,10 @@ public class ArticleServiceImpl implements ArticleService {
                 siameseArticleEntity.setUpdateTime(System.currentTimeMillis());
                 result = updateArticle(siameseArticleEntity);
             }
+            // Delete original file
+            ArrayList<String> addresses = new ArrayList<>();
+            addresses.add(oldAddress);
+            deleteFile(addresses);
         } else {
             // Save article information to database
             siameseArticleEntity.setId(id);
@@ -117,9 +118,10 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc) {
+    public SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc, String userId) {
         PageMethod.startPage(page, rows);
         Example example = new Example(SiameseArticleEntity.class);
+        example.createCriteria().andEqualTo(SystemConstant.STRING_USER_ID, userId);
         if (!StringUtils.isBlank(key)) {
             example.createCriteria()
 //                .orLike(SystemConstant.STRING_TAG, SystemConstant.CHARACTER_PERCENT_SIGN + key + SystemConstant.CHARACTER_PERCENT_SIGN)

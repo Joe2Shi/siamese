@@ -53,7 +53,7 @@ public class LoginFilter extends ZuulFilter {
         RequestContext context = RequestContext.getCurrentContext();
         HttpServletRequest request = context.getRequest();
         String requestURI = request.getRequestURI();
-        return !isAllowPath(requestURI);
+        return !requestURI.contains(SystemConstant.STRING_SWAGGER_JSON) && !isAllowPath(requestURI);
     }
 
     @SneakyThrows

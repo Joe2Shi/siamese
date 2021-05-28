@@ -42,6 +42,7 @@ public class FileServiceImpl implements FileService {
     public SiameseResult<String> uploadFile(UploadFileDto uploadFile) {
         MultipartFile file = uploadFile.getFile();
         String type = uploadFile.getType();
+        String address;
         if (ObjectUtils.isEmpty(file)) {
             throw new SiameseException(ResponseEnum.FILE_IS_REQUIRED);
         }
@@ -72,13 +73,13 @@ public class FileServiceImpl implements FileService {
             // upload file service
             String extension = StringUtils.substringAfterLast(file.getOriginalFilename(), SystemConstant.CHARACTER_DECIMAL_POINT);
             StorePath storePath = fastFileStorageClient.uploadFile(type.toLowerCase(), file.getInputStream(), file.getSize(), extension);
-            String address = fileProperties.getBaseAddress() + storePath.getFullPath();
-            // return result
-            return new SiameseResult<>(ResponseEnum.OPERATING_SUCCESS, address);
+            address = fileProperties.getBaseAddress() + storePath.getFullPath();
         } catch (IOException e) {
             log.error(ResponseEnum.UPLOAD_FAILED.getMessage() + SystemConstant.CHARACTER_COLON + SystemConstant.CHARACTER_SPACE + e.getMessage());
             throw new SiameseException(ResponseEnum.UPLOAD_FAILED);
         }
+        // return result
+        return new SiameseResult<>(ResponseEnum.OPERATING_SUCCESS, address);
     }
 
     @Override
@@ -94,7 +95,7 @@ public class FileServiceImpl implements FileService {
             try {
                 fastFileStorageClient.deleteFile(group, path);
             } catch (Exception e) {
-                log.warn(e.getMessage() + SystemConstant.CHARACTER_COLON + SystemConstant.CHARACTER_SPACE + address);
+                log.error(e.getMessage() + SystemConstant.CHARACTER_COLON + SystemConstant.CHARACTER_SPACE + address);
             }
         }
         return new SiameseResult(ResponseEnum.OPERATING_SUCCESS);
@@ -119,8 +120,7 @@ public class FileServiceImpl implements FileService {
             }
             inputStream.close();
         } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new SiameseException(ResponseEnum.READ_FILE_FAILED);
+            log.error(e.getMessage() + SystemConstant.CHARACTER_COLON + SystemConstant.CHARACTER_SPACE + address);
         }
         return new SiameseResult<>(ResponseEnum.REQUEST_ACCEPTED, String.valueOf(stringBuilder));
     }

@@ -12,9 +12,10 @@ public interface ArticleService {
      * New article
      *
      * @param insertArticle New article information
+     * @param userId User ID
      * @return
      */
-    SiameseResult insertArticle(InsertArticleDto insertArticle);
+    SiameseResult insertArticle(InsertArticleDto insertArticle, String userId);
 
     /**
      * Update article
@@ -32,10 +33,11 @@ public interface ArticleService {
      * @param rows   Page size
      * @param sortBy Sort field
      * @param desc   true: descending
+     * @param userId User ID
      *               false: ascending
      * @return
      */
-    SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc);
+    SiameseResult selectArticleByPage(String key, Integer page, Integer rows, String sortBy, Boolean desc, String userId);
 
     /**
      * Delete articles in batches according to ids
