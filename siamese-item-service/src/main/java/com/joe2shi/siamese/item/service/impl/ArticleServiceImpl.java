@@ -100,11 +100,11 @@ public class ArticleServiceImpl implements ArticleService {
                 siameseArticleEntity.setAddress(String.valueOf(result.getData()));
                 siameseArticleEntity.setUpdateTime(System.currentTimeMillis());
                 result = updateArticle(siameseArticleEntity);
+                // Delete original file
+                ArrayList<String> addresses = new ArrayList<>();
+                addresses.add(oldAddress);
+                deleteFile(addresses);
             }
-            // Delete original file
-            ArrayList<String> addresses = new ArrayList<>();
-            addresses.add(oldAddress);
-            deleteFile(addresses);
         } else {
             // Save article information to database
             siameseArticleEntity.setId(id);
